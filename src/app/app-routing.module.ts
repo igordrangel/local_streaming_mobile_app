@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SearchComponent } from './search/search.component';
+import { VideoComponent } from './video/video.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'search', component: SearchComponent},
   {path: 'settings', component: SettingsComponent},
+  {path: 'video/:id/:filename', component: VideoComponent},
   {path: '**', redirectTo: 'home'}
 ];
 

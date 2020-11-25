@@ -1,1 +1,14 @@
-<h1>Home</h1>
+<section *ngIf="videos$ | async as videos else showLoader">
+	<mat-card *ngFor="let video of videos" [routerLink]="'/video/'+video.id+'/'+video.arquivo" class="card-video">
+		<img *ngIf="video.poster | async as poster" [alt]="poster.alt" [src]="poster.src" mat-card-image/>
+		<mat-card-header>
+			<mat-card-title>{{video.tituloOriginal}}</mat-card-title>
+			<mat-card-subtitle>{{categoriaTranslate.translate(video.categoria).name}}</mat-card-subtitle>
+		</mat-card-header>
+	</mat-card>
+</section>
+<ng-template #showLoader>
+	<div class="loader">
+		<mat-spinner color="primary" diameter="60"></mat-spinner>
+	</div>
+</ng-template>
