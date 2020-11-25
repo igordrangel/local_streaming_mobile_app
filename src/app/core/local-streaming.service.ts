@@ -15,4 +15,8 @@ export class LocalStreamingService {
   public getLista(params: any) {
     return this.http.get<VideoInterface[]>(this.urlServer + '/videos', {params});
   }
+  
+  public getPorId(id: number) {
+    return this.http.get<VideoInterface>(this.urlServer + '/video/' + id);
+  }
 }

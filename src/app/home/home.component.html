@@ -1,5 +1,6 @@
 <section *ngIf="videos$ | async as videos else showLoader">
-	<mat-card *ngFor="let video of videos" [routerLink]="'/video/'+video.id+'/'+video.arquivo" class="card-video">
+	<h2>Adicionados Recentemente</h2>
+	<mat-card *ngFor="let video of videos" [routerLink]="'/video/'+video.id" class="card-video">
 		<img *ngIf="video.poster | async as poster" [alt]="poster.alt" [src]="poster.src" mat-card-image/>
 		<mat-card-header>
 			<mat-card-title>{{video.tituloOriginal}}</mat-card-title>
@@ -9,6 +10,6 @@
 </section>
 <ng-template #showLoader>
 	<div class="loader">
-		<mat-spinner color="primary" diameter="60"></mat-spinner>
+		<mat-spinner color="primary" diameter="30"></mat-spinner>
 	</div>
 </ng-template>

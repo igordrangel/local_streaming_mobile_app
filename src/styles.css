@@ -20,4 +20,4 @@ blockquote, q {quotes: none;}
 blockquote:before, blockquote:after,
 q:before, q:after {content: '';content: none;}
 table {border-collapse: collapse;border-spacing: 0;}
-section h2:before {content: '>';margin-right: 5px;}
+mat-card-header .mat-card-header-text {width: 100%;}

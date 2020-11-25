@@ -9,7 +9,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'search', component: SearchComponent},
   {path: 'settings', component: SettingsComponent},
-  {path: 'video/:id/:filename', component: VideoComponent},
+  {path: 'video/:id', component: VideoComponent},
   {path: '**', redirectTo: 'home'}
 ];
 

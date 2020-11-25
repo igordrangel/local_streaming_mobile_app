@@ -1,3 +1,20 @@
-<video controls>
-	<source [src]="src" [type]="type">
+<video *ngIf="videoSelectedSubject | async as videoSelected" controls>
+	<source [src]="videoSelected.src" [type]="videoSelected.type">
 </video>
+<div class="video-info">
+	<mat-list>
+		<mat-list-item>
+			<mat-icon mat-list-icon>{{video.tipo === tipoEnum.filme ? 'movie' : 'movie'}}</mat-icon>
+			<h4 mat-line>{{video.tituloOriginal}}</h4>
+			<small mat-line>{{categoriaTranslate.translate(video.categoria).name}}</small>
+		</mat-list-item>
+	</mat-list>
+	<mat-divider></mat-divider>
+	<mat-action-list>
+		<mat-list-item (click)="selectVideo(arquivo)" *ngFor="let arquivo of video.arquivos">
+			<mat-icon mat-list-icon>play_circle</mat-icon>
+			<h4 mat-line>{{arquivo.filename}}</h4>
+			<small mat-line>{{arquivo.type}}</small>
+		</mat-list-item>
+	</mat-action-list>
+</div>
