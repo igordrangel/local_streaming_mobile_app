@@ -45,7 +45,7 @@ export class VideoComponent implements OnInit {
     this.videoSelectedSubject.next(null);
     await KlDelay.waitFor(50);
     this.videoSelectedSubject.next({
-      src: `http://${IP}:3000/video/${this.id}/${arquivo.filename}`,
+      src: `http://${IP()}:3000/video/${this.id}/${arquivo.filename}`,
       type: arquivo.type
     });
   }

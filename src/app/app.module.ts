@@ -17,6 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { KoalaFormModule } from 'ngx-koala';
 import { HttpClientModule } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
+import { TitleModule } from './shared/title/title.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatListModule } from '@angular/material/list';
     MatCardModule,
     MatListModule,
     KoalaFormModule,
+    TitleModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     AppRoutingModule
   ],

@@ -1,8 +1,9 @@
-section {box-sizing: border-box;display: flex;flex-wrap: wrap;padding: 20px 10px;width: 100%;}
+section {display: flex;flex-direction: column;flex-wrap: wrap;width: 100%;}
 section h2 {width: 100%;}
-.card-video {flex-direction: column;margin: 5px;overflow: auto;width: 150px;}
+.content-videos {box-sizing: border-box;display: flex;overflow: auto;padding: 0 10px;width: 100%;}
+.card-video {display: inline-block;margin: 5px;width: 150px;}
 .card-video mat-card-header {text-align: center;width: 100%;}
-.card-video mat-card-header mat-card-title {font-size: 1.2em;}
+.card-video mat-card-header mat-card-title {font-size: 1.2em;text-overflow: ellipsis;white-space: nowrap;}
 .card-video mat-card-header mat-card-subtitle {font-size: 1em;margin-bottom: 0;}
 .card-video img {margin-bottom: 0;}
 .loader {align-items: center;display: flex;height: 100%;justify-content: center;width: 100%;}

@@ -1,0 +1,25 @@
+RewriteOptions inherit
+# BLOQUEIA O ACESSO AO HTACCESS
+<files ~ "^.*\.([Hh][Tt][Aa])">
+    order allow,deny
+    deny from all
+    satisfy all
+</files>
+
+RewriteEngine On
+
+RewriteBase /
+
+RewriteCond %{HTTP} !=on
+RewriteRule ^ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Defina o pacote “ea-php72” como a linguagem padrão de programação “PHP”.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php72___lsphp .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

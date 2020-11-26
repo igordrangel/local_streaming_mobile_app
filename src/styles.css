@@ -21,3 +21,16 @@ blockquote:before, blockquote:after,
 q:before, q:after {content: '';content: none;}
 table {border-collapse: collapse;border-spacing: 0;}
 mat-card-header .mat-card-header-text {width: 100%;}
+.mat-button-disabled,
+input::placeholder,
+.mat-form-field-appearance-outline .mat-form-field-outline {color: #FFFFFF !important;opacity: .6;}
+.mat-select-value,
+.mat-select-arrow,
+.mat-form-field input,
+.mat-form-field textarea,
+.mat-form-field-appearance-outline:not(.mat-form-field-invalid) .mat-form-field-outline-thick,
+.mat-form-field label {caret-color: #FFFFFF !important;color: #FFFFFF !important;}
+.mat-form-field-underline,
+.mat-form-field-appearance-fill .mat-form-field-underline::before,
+.mat-form-field-ripple {background: transparent !important;}
+.mat-divider {border-top-color: rgba(255, 255, 255, .12)}
