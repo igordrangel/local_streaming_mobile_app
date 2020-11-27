@@ -5,6 +5,7 @@ import { EnumTranslate } from './enums/enum.translate';
 
 export const videoCategoriaOptions = koala([
 	VideoCategoriaEnumTranslate.translate(VideoCategoriaEnum.acao),
+	VideoCategoriaEnumTranslate.translate(VideoCategoriaEnum.anime),
 	VideoCategoriaEnumTranslate.translate(VideoCategoriaEnum.thriller),
 	VideoCategoriaEnumTranslate.translate(VideoCategoriaEnum.terror),
 	VideoCategoriaEnumTranslate.translate(VideoCategoriaEnum.suspense),

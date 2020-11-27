@@ -8,5 +8,6 @@ export enum VideoCategoriaEnum {
   ficcaoCientifica,
   documentario,
   epico,
-  guerra
+  guerra,
+  anime
 }
