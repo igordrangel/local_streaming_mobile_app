@@ -9,8 +9,8 @@
 			<small mat-line>{{categoriaTranslate.translate(video.categoria).name}}</small>
 		</mat-list-item>
 	</mat-list>
-	<mat-divider></mat-divider>
 	<mat-action-list *ngFor="let item of getListaArquivos()">
+		<mat-divider></mat-divider>
 		<h3 class="temporada" mat-subheader>{{item.temporada}}ª Temporada</h3>
 		<mat-list-item (click)="selectVideo(arquivo)" *ngFor="let arquivo of item.arquivos">
 			<mat-icon mat-list-icon>play_circle</mat-icon>
