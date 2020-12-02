@@ -7,6 +7,12 @@ import { VideoCategoriaEnumTranslate } from '../core/enums/translate/video-categ
 import { VideoTipoEnum } from '../core/enums/video-tipo.enum';
 import { BehaviorSubject } from 'rxjs';
 import { KlDelay } from 'koala-utils/dist/utils/KlDelay';
+import { koala } from 'koala-utils';
+
+interface ListaArquivos {
+  temporada: number;
+  arquivos: VideoArquivoInterface[];
+}
 
 @Component({
   templateUrl: 'video.component.html',
@@ -48,5 +54,29 @@ export class VideoComponent implements OnInit {
       src: `http://${IP()}:3000/video/${this.id}/${arquivo.filename}`,
       type: arquivo.type
     });
+  }
+  
+  public getListaArquivos(): ListaArquivos[] {
+    return koala(this.video.arquivos)
+      .array<VideoArquivoInterface>()
+      .pipe(klArray => {
+        const listaArquivos: ListaArquivos[] = [];
+        
+        klArray.getValue().forEach(arquivo => {
+          const index = koala(listaArquivos).array<ListaArquivos>().getIndex('temporada', arquivo.temporada);
+          if (index >= 0) {
+            listaArquivos[index].arquivos.push(arquivo);
+          } else {
+            listaArquivos.push({
+              temporada: arquivo.temporada,
+              arquivos: [arquivo]
+            });
+          }
+        });
+        
+        return listaArquivos;
+      })
+      .orderBy('temporada')
+      .getValue();
   }
 }
