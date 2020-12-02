@@ -14,7 +14,7 @@ import { SearchComponent } from './search/search.component';
 import { VideoComponent } from './video/video.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { KoalaFormModule } from 'ngx-koala';
+import { KoalaDialogModule, KoalaDialogService, KoalaFormModule, KoalaQuestionModule, KoalaQuestionService } from 'ngx-koala';
 import { HttpClientModule } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
 import { TitleModule } from './shared/title/title.module';
@@ -37,11 +37,19 @@ import { TitleModule } from './shared/title/title.module';
     MatCardModule,
     MatListModule,
     KoalaFormModule,
+    KoalaQuestionModule,
+    KoalaDialogModule,
     TitleModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerImmediately'
+    }),
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    KoalaQuestionService,
+    KoalaDialogService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

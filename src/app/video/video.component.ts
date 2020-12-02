@@ -21,8 +21,6 @@ interface ListaArquivos {
 })
 export class VideoComponent implements OnInit {
   public videoSelectedSubject = new BehaviorSubject<{ src: string; type: string; }>(null);
-  public src: string;
-  public type: string;
   public video: VideoInterface;
   public categoriaTranslate = VideoCategoriaEnumTranslate;
   public tipoEnum = VideoTipoEnum;
@@ -54,6 +52,12 @@ export class VideoComponent implements OnInit {
       src: `http://${IP()}:3000/video/${this.id}/${arquivo.filename}`,
       type: arquivo.type
     });
+  }
+  
+  public verifyActiveVideo(arquivo: VideoArquivoInterface) {
+    return arquivo ?
+      this.videoSelectedSubject.getValue()?.src.indexOf(arquivo.filename) >= 0 :
+      false;
   }
   
   public getListaArquivos(): ListaArquivos[] {

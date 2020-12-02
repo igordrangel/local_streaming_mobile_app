@@ -15,5 +15,12 @@
 			<mat-icon>settings</mat-icon>
 			<span>Ajustes</span>
 		</button>
+    <button
+	    (click)="updateAndInstallUpdates()"
+	    *ngIf="updateIsAvailable"
+	    mat-icon-button>
+      <mat-icon>get_app</mat-icon>
+	    <span>Atualização Disponível</span>
+    </button>
 	</nav>
 </main>

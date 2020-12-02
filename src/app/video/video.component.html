@@ -1,7 +1,7 @@
 <video *ngIf="videoSelectedSubject | async as videoSelected" controls>
 	<source [src]="videoSelected.src" [type]="videoSelected.type">
 </video>
-<div class="video-info">
+<div *ngIf="video" class="video-info">
 	<mat-list>
 		<mat-list-item>
 			<mat-icon mat-list-icon>{{video.tipo === tipoEnum.filme ? 'movie' : 'videocam'}}</mat-icon>
@@ -12,7 +12,8 @@
 	<mat-action-list *ngFor="let item of getListaArquivos()">
 		<mat-divider></mat-divider>
 		<h3 class="temporada" mat-subheader>{{item.temporada}}ª Temporada</h3>
-		<mat-list-item (click)="selectVideo(arquivo)" *ngFor="let arquivo of item.arquivos">
+		<mat-list-item (click)="selectVideo(arquivo)" *ngFor="let arquivo of item.arquivos"
+		               [ngClass]="{'active': verifyActiveVideo(arquivo)}">
 			<mat-icon mat-list-icon>play_circle</mat-icon>
 			<h4 mat-line>{{arquivo.titulo}}</h4>
 			<small mat-line>{{arquivo.type}}</small>
