@@ -11,7 +11,7 @@
 	</mat-list>
 	<mat-action-list *ngFor="let item of getListaArquivos()">
 		<mat-divider></mat-divider>
-		<h3 class="temporada" mat-subheader>{{item.temporada}}ª Temporada</h3>
+		<h3 *ngIf="item.temporada" class="temporada" mat-subheader>{{item.temporada}}ª Temporada</h3>
 		<mat-list-item (click)="selectVideo(arquivo)" *ngFor="let arquivo of item.arquivos"
 		               [ngClass]="{'active': verifyActiveVideo(arquivo)}">
 			<mat-icon mat-list-icon>play_circle</mat-icon>
