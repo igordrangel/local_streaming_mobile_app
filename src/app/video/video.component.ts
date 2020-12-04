@@ -20,7 +20,7 @@ interface ListaArquivos {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VideoComponent implements OnInit {
-  public videoSelectedSubject = new BehaviorSubject<{ src: string; type: string; }>(null);
+  public videoSelectedSubject = new BehaviorSubject<{ srcSubtitle?: string; src: string; type: string; }>(null);
   public video: VideoInterface;
   public categoriaTranslate = VideoCategoriaEnumTranslate;
   public tipoEnum = VideoTipoEnum;
@@ -49,6 +49,7 @@ export class VideoComponent implements OnInit {
     this.videoSelectedSubject.next(null);
     await KlDelay.waitFor(50);
     this.videoSelectedSubject.next({
+      srcSubtitle: `http://${IP()}:3000/video/${this.id}/${arquivo.legendaFilename.replace('.srt', '.vtt')}`,
       src: `http://${IP()}:3000/video/${this.id}/${arquivo.filename}`,
       type: arquivo.type
     });
