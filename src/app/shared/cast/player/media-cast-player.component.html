@@ -1,8 +1,7 @@
 <div *ngIf="media$ | async as media" class="content-player">
 	<h1>{{media.title}}</h1>
 	<small>{{media.subtitle}}</small>
-	<div class="control-volume"></div>
-	<video #video>
+	<video #video autoplay>
 		<source [src]="media.videoSrc" [type]="media.videoType">
 	</video>
 	<div class="controls-reproduction">
@@ -22,11 +21,11 @@
 	<div *ngIf="controlsReproduction$ | async as controlReproduction" class="content-progress-bar">
 		<span>{{controlReproduction.labelCurrentTime}}</span>
 		<mat-slider
-			[displayWith]="formatLabel"
+			(change)="timeChange($event)"
+			(click)="pause()"
 			[max]="controlReproduction.duration"
 			[min]="0"
 			[value]="controlReproduction.currentTime"
-			thumbLabel
 			tickInterval="1000">
 		</mat-slider>
 		<span>{{controlReproduction.labelDurationTime}}</span>

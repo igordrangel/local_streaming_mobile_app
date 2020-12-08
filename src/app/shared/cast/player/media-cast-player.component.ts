@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { MatSliderChange } from '@angular/material/slider';
 
 export interface MediaInterface {
   title: string;
@@ -26,15 +28,25 @@ export class MediaCastPlayerComponent implements AfterViewInit {
   private intervalTimer: number;
   
   ngAfterViewInit() {
-    setTimeout(() => this.calcTimer(), 300);
+    this.media$.pipe(debounceTime(1000)).subscribe(() => {
+      setTimeout(() => {
+        this.pause();
+        this.calcTimer();
+      }, 1);
+    });
   }
   
-  public formatLabel(value: number) {
-    if (value > 0) {
-      return value + 'k';
+  public timeChange(sliderChange: MatSliderChange) {
+    const value = sliderChange.value;
+    if (!this.videoRef.nativeElement.paused) {
+      this.pause();
+      const subscription = this.controlsReproduction$.pipe(debounceTime(300)).subscribe(() => {
+        this.play();
+        subscription.unsubscribe();
+      });
     }
-    
-    return value;
+    this.videoRef.nativeElement.currentTime = value;
+    this.calcTimer();
   }
   
   public play() {
@@ -58,32 +70,47 @@ export class MediaCastPlayerComponent implements AfterViewInit {
     this.videoRef.nativeElement.currentTime = 0;
     this.videoRef.nativeElement.pause();
     this.initTimer();
+    this.calcTimer();
   }
   
   private calcTimer() {
     const video = this.videoRef.nativeElement;
-    const duration = video.duration;
-    const currentTime = Math.round((video.currentTime / video.duration) * 100);
+    const duration = (`${video.duration}` !== 'NaN' ? video.duration : 0);
     this.controlsReproduction$.next({
       labelCurrentTime: this.getDurationString(video.currentTime),
-      labelDurationTime: this.getDurationString(video.duration ?? 0),
-      currentTime,
-      duration
+      labelDurationTime: this.getDurationString(duration),
+      currentTime: video.currentTime,
+      duration: duration
     });
   }
   
   private getDurationString(durationInSec: number) {
     let durationString = '' + Math.floor(durationInSec % 60);
-    const durationInMin = Math.floor(durationInSec / 60);
-    if (durationInMin === 0) {
-      return durationString;
+    if (parseInt(durationString) < 10) {
+      durationString = '0' + durationString;
     }
-    durationString = (durationInMin % 60) + ':' + durationString;
-    const durationInHour = Math.floor(durationInMin / 60);
-    if (durationInHour === 0) {
-      return durationString;
+  
+    let durationInMin = '' + Math.floor(durationInSec / 60);
+    if (parseInt(durationInMin) < 10) {
+      durationInMin = '0' + durationInMin;
     }
-    return durationInHour + ':' + durationString;
+  
+    let durationInHour = '' + Math.floor(parseInt(durationInMin) / 60);
+    if (parseInt(durationInHour) < 10) {
+      durationInHour = '0' + durationInHour;
+    }
+  
+    if (parseInt(durationInMin) === 0) {
+      return '00:00:' + durationString;
+    } else if (parseInt(durationInHour) === 0) {
+      return `00:${durationInMin}:${durationString}`;
+    } else {
+      durationInMin = '' + (parseInt(durationInMin) % 60);
+      if (parseInt(durationInMin) < 10) {
+        durationInMin = '0' + durationInMin;
+      }
+      return `${durationInHour}:${durationInMin}:${durationString}`;
+    }
   }
   
   private initTimer() {
