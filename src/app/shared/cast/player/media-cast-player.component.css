@@ -1,0 +1,14 @@
+video {width: 100%;}
+h1 {font-family: 'Open Sans', sans-serif;padding: 25px 0 0;text-align: center;}
+small {display: block;font-family: 'Open Sans', sans-serif;padding: 0 0 25px;text-align: center;width: 100%;}
+.controls-reproduction {align-items: center;display: flex;justify-content: center;width: 100%;}
+.controls-reproduction button {margin: 0 20px;}
+.controls-reproduction .stop,
+.controls-reproduction .subtitle {height: 30px;width: 30px;}
+.controls-reproduction .play,
+.controls-reproduction .pause {height: 60px;width: 60px;}
+.controls-reproduction .stop mat-icon,
+.controls-reproduction .subtitle mat-icon {font-size: 30px;height: 30px;line-height: 30px;width: 30px;}
+.controls-reproduction .play mat-icon,
+.controls-reproduction .pause mat-icon {font-size: 60px;height: 60px;line-height: 60px;width: 60px;}
+.content-progress-bar {align-items: center;display: flex;justify-content: space-evenly;width: 100%;}

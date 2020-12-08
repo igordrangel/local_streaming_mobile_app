@@ -8,6 +8,7 @@ import { VideoTipoEnum } from '../core/enums/video-tipo.enum';
 import { BehaviorSubject } from 'rxjs';
 import { KlDelay } from 'koala-utils/dist/utils/KlDelay';
 import { koala } from 'koala-utils';
+import { MediaInterface } from '../shared/cast/player/media-cast-player.component';
 
 interface ListaArquivos {
   temporada: number;
@@ -20,7 +21,7 @@ interface ListaArquivos {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VideoComponent implements OnInit {
-  public videoSelectedSubject = new BehaviorSubject<{ srcSubtitle?: string; src: string; type: string; }>(null);
+  public videoSelectedSubject = new BehaviorSubject<MediaInterface>(null);
   public video: VideoInterface;
   public categoriaTranslate = VideoCategoriaEnumTranslate;
   public tipoEnum = VideoTipoEnum;
@@ -48,16 +49,19 @@ export class VideoComponent implements OnInit {
   public async selectVideo(arquivo: VideoArquivoInterface) {
     this.videoSelectedSubject.next(null);
     await KlDelay.waitFor(50);
+    const sourceMedia = `http://${IP()}:3000/video/${this.id}/${arquivo.filename}`;
     this.videoSelectedSubject.next({
-      srcSubtitle: `http://${IP()}:3000/video/${this.id}/${arquivo.legendaFilename.replace('.srt', '.vtt')}`,
-      src: `http://${IP()}:3000/video/${this.id}/${arquivo.filename}`,
-      type: arquivo.type
+      subtitleSrc: `http://${IP()}:3000/video/${this.id}/${arquivo.legendaFilename.replace('.srt', '.vtt')}`,
+      videoSrc: sourceMedia,
+      videoType: arquivo.type,
+      title: this.video.tituloOriginal,
+      subtitle: arquivo.titulo
     });
   }
   
   public verifyActiveVideo(arquivo: VideoArquivoInterface) {
     return arquivo ?
-      this.videoSelectedSubject.getValue()?.src.indexOf(arquivo.filename) >= 0 :
+      this.videoSelectedSubject.getValue()?.videoSrc.indexOf(arquivo.filename) >= 0 :
       false;
   }
   

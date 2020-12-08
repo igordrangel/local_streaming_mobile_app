@@ -1,0 +1,34 @@
+<div *ngIf="media$ | async as media" class="content-player">
+	<h1>{{media.title}}</h1>
+	<small>{{media.subtitle}}</small>
+	<div class="control-volume"></div>
+	<video #video>
+		<source [src]="media.videoSrc" [type]="media.videoType">
+	</video>
+	<div class="controls-reproduction">
+		<button (click)="stop()" class="stop" mat-icon-button>
+			<mat-icon>stop</mat-icon>
+		</button>
+		<button (click)="play()" *ngIf="video.paused" class="play" mat-icon-button>
+			<mat-icon>play_arrow</mat-icon>
+		</button>
+		<button (click)="pause()" *ngIf="!video.paused" class="pause" mat-icon-button>
+			<mat-icon>pause</mat-icon>
+		</button>
+		<button class="subtitle" mat-icon-button>
+			<mat-icon>subtitles</mat-icon>
+		</button>
+	</div>
+	<div *ngIf="controlsReproduction$ | async as controlReproduction" class="content-progress-bar">
+		<span>{{controlReproduction.labelCurrentTime}}</span>
+		<mat-slider
+			[displayWith]="formatLabel"
+			[max]="controlReproduction.duration"
+			[min]="0"
+			[value]="controlReproduction.currentTime"
+			thumbLabel
+			tickInterval="1000">
+		</mat-slider>
+		<span>{{controlReproduction.labelDurationTime}}</span>
+	</div>
+</div>
