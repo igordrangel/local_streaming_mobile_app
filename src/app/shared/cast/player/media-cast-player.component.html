@@ -1,17 +1,18 @@
 <div *ngIf="media$ | async as media" class="content-player">
 	<h1>{{media.title}}</h1>
 	<small>{{media.subtitle}}</small>
-	<video #video autoplay>
+	<video #video crossorigin="anonymous">
 		<source [src]="media.videoSrc" [type]="media.videoType">
+		<track [src]="media.subtitleSrc" default kind="subtitles" label="Português" srclang="pt-br">
 	</video>
 	<div class="controls-reproduction">
-		<button (click)="stop()" class="stop" mat-icon-button>
+		<button (click)="playerHandler.stop()" class="stop" mat-icon-button>
 			<mat-icon>stop</mat-icon>
 		</button>
-		<button (click)="play()" *ngIf="video.paused" class="play" mat-icon-button>
+		<button (click)="playerHandler.play()" *ngIf="isPaused$ | async" class="play" mat-icon-button>
 			<mat-icon>play_arrow</mat-icon>
 		</button>
-		<button (click)="pause()" *ngIf="!video.paused" class="pause" mat-icon-button>
+		<button (click)="playerHandler.pause()" *ngIf="!(isPaused$ | async)" class="pause" mat-icon-button>
 			<mat-icon>pause</mat-icon>
 		</button>
 		<button class="subtitle" mat-icon-button>
@@ -22,7 +23,7 @@
 		<span>{{controlReproduction.labelCurrentTime}}</span>
 		<mat-slider
 			(change)="timeChange($event)"
-			(click)="pause()"
+			(click)="playerHandler.pause()"
 			[max]="controlReproduction.duration"
 			[min]="0"
 			[value]="controlReproduction.currentTime"
