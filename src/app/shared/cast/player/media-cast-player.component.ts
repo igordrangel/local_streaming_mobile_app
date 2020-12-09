@@ -142,10 +142,12 @@ export class MediaCastPlayerComponent implements AfterViewInit {
       this.isPaused$.next(this.playerHandler.isPaused());
     };
     playerTarget.load = (mediaData: MediaInterface) => {
-      let subtitle = null;
+      // @ts-ignore
+      const mediaInfo = new chrome.cast.media.MediaInfo(mediaData.videoSrc);
+  
       if (mediaData.subtitleSrc) {
         // @ts-ignore
-        subtitle = new chrome.cast.media.Track(1, chrome.cast.media.TrackType.TEXT);
+        const subtitle = new chrome.cast.media.Track(1, chrome.cast.media.TrackType.TEXT);
         subtitle.trackContentId = mediaData.subtitleSrc;
         subtitle.trackContentType = 'text/vtt';
         // @ts-ignore
@@ -153,10 +155,10 @@ export class MediaCastPlayerComponent implements AfterViewInit {
         subtitle.name = 'Português (Brasil)';
         subtitle.language = 'pt-BR';
         subtitle.customData = null;
+        mediaInfo.tracks = [subtitle];
+        mediaInfo.activeTrackIds = [1];
       }
       
-      // @ts-ignore
-      const mediaInfo = new chrome.cast.media.MediaInfo(mediaData.videoSrc);
       mediaInfo.contentType = mediaData.videoType;
       mediaInfo.customData = null;
       // @ts-ignore
@@ -164,15 +166,16 @@ export class MediaCastPlayerComponent implements AfterViewInit {
       // @ts-ignore
       mediaInfo.metadata.metadataType = chrome.cast.media.StreamType.BUFFERED;
       // @ts-ignore
-      mediaInfo.textTrackStyle = new chrome.cast.media.TextTrackStyle();
       mediaInfo.metadata.title = mediaData.title;
-      if (subtitle) {
-        mediaInfo.tracks = [subtitle];
-      }
+      mediaInfo.duration = null;
       // @ts-ignore
       const request = new chrome.cast.media.LoadRequest(mediaInfo);
       castSession.loadMedia(request).then(() => {
         this.playerHandler.setLoaded();
+        // console.log('Media loaded successfully');
+        // // @ts-ignore
+        // const tracksInfoRequest = new chrome.cast.media.EditTracksInfoRequest([1]);
+        // castSession.c.media.editTracksInfo(tracksInfoRequest, s => console.log('Subtitles loaded'), e => console.log(e));
       });
     };
     playerTarget.getCurrentMediaTime = () => {
