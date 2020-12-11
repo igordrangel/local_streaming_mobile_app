@@ -18,7 +18,6 @@ import { KoalaDialogModule, KoalaDialogService, KoalaFormModule, KoalaQuestionMo
 import { HttpClientModule } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
 import { TitleModule } from './shared/title/title.module';
-import { MediaCastModule } from './shared/cast/media-cast.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import { MediaCastModule } from './shared/cast/media-cast.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MediaCastModule,
     HttpClientModule,
     MatButtonModule,
     MatIconModule,

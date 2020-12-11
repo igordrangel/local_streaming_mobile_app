@@ -1,4 +1,7 @@
-<media-cast-player [media$]="videoSelectedSubject"></media-cast-player>
+<video *ngIf="videoSelectedSubject | async as videoSelected" controls crossorigin="anonymous">
+	<source [src]="videoSelected.videoSrc" [type]="videoSelected.videoType">
+	<track [src]="videoSelected.subtitleSrc" default kind="subtitles" label="Português" srclang="pt-br">
+</video>
 <div *ngIf="video" class="video-info">
 	<mat-list>
 		<mat-list-item>
