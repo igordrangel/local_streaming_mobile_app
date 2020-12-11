@@ -1,10 +1,15 @@
 <div *ngIf="media$ | async as media" class="content-player">
 	<h1>{{media.title}}</h1>
 	<small>{{media.subtitle}}</small>
-	<video #video crossorigin="anonymous">
-		<source [src]="media.videoSrc" [type]="media.videoType">
-		<track [src]="media.subtitleSrc" default kind="subtitles" label="Português" srclang="pt-br">
-	</video>
+	<div class="container-video">
+		<video #video crossorigin="anonymous">
+			<source [src]="media.videoSrc" [type]="media.videoType">
+			<track [src]="media.subtitleSrc" default kind="subtitles" label="Português" srclang="pt-br">
+		</video>
+		<div *ngIf="loader$ | async" class="loader">
+			<mat-spinner diameter="50"></mat-spinner>
+		</div>
+	</div>
 	<div class="controls-reproduction">
 		<button (click)="playerHandler.stop()" class="stop" mat-icon-button>
 			<mat-icon>stop</mat-icon>

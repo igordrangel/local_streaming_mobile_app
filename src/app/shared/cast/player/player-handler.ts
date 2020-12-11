@@ -6,7 +6,9 @@ export class PlayerHandler {
     private target: any,
     private player: any,
     private currentMedia: MediaInterface
-  ) {}
+  ) {
+    this.play();
+  }
   
   public isPaused() {
     return this.target.isPaused();

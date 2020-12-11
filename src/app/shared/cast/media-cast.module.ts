@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MediaCastPlayerComponent } from './player/media-cast-player.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MatSliderModule } from '@angular/material/slider';
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    MatSliderModule
+    MatSliderModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MediaCastModule {

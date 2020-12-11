@@ -1,9 +1,6 @@
 section {display: flex;flex-direction: column;flex-wrap: wrap;width: 100%;}
 section h2 {width: 100%;}
 .content-videos {box-sizing: border-box;display: flex;overflow: auto;padding: 0 10px;width: 100%;}
-.card-video {display: inline-block;margin: 5px;width: 150px;}
-.card-video mat-card-header {text-align: center;width: 100%;}
-.card-video mat-card-header mat-card-title {font-size: 1.2em;text-overflow: ellipsis;white-space: nowrap;}
-.card-video mat-card-header mat-card-subtitle {font-size: 1em;margin-bottom: 0;}
-.card-video img {margin-bottom: 0;}
+.card-video {display: inline-block;height: 250px;margin: 5px;padding: 0;position: relative;}
+.card-video img {height: 250px;margin: 0;width: 180px;}
 .loader {align-items: center;display: flex;height: 100%;justify-content: center;width: 100%;}

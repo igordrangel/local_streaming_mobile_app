@@ -29,6 +29,7 @@ export class MediaCastPlayerComponent implements AfterViewInit {
   @ViewChild('video', {static: false}) public videoRef: ElementRef<HTMLVideoElement>;
   public isPaused$ = new BehaviorSubject<boolean>(true);
   public playerHandler: PlayerHandler;
+  public loader$ = new BehaviorSubject<boolean>(false);
   private intervalTimer: number;
   private remotePlayer: any;
   private remotePlayerController: any;
@@ -42,6 +43,9 @@ export class MediaCastPlayerComponent implements AfterViewInit {
         this.mediaCastService
             .connection()
             .subscribe(isConnected => {
+              this.remotePlayer = null;
+              this.remotePlayerController = null;
+              this.isPaused$.next(true);
               if (isConnected) {
                 const remotePlayer = this.mediaCastService.getRemotePlayer();
                 this.remotePlayer = remotePlayer.player;
@@ -142,8 +146,16 @@ export class MediaCastPlayerComponent implements AfterViewInit {
       this.isPaused$.next(this.playerHandler.isPaused());
     };
     playerTarget.load = (mediaData: MediaInterface) => {
+      this.loader$.next(true);
       // @ts-ignore
-      const mediaInfo = new chrome.cast.media.MediaInfo(mediaData.videoSrc);
+      const mediaInfo = new chrome.cast.media.MediaInfo(mediaData.videoSrc, mediaData.videoType);
+      // @ts-ignore
+      mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
+      // @ts-ignore
+      mediaInfo.metadata.metadataType = chrome.cast.media.StreamType.BUFFERED;
+      // @ts-ignore
+      mediaInfo.metadata.title = mediaData.title;
+      mediaInfo.metadata.subtitle = mediaData.subtitle;
   
       if (mediaData.subtitleSrc) {
         // @ts-ignore
@@ -154,28 +166,15 @@ export class MediaCastPlayerComponent implements AfterViewInit {
         subtitle.subtype = chrome.cast.media.TextTrackType.SUBTITLES;
         subtitle.name = 'Português (Brasil)';
         subtitle.language = 'pt-BR';
-        subtitle.customData = null;
         mediaInfo.tracks = [subtitle];
         mediaInfo.activeTrackIds = [1];
       }
-      
-      mediaInfo.contentType = mediaData.videoType;
-      mediaInfo.customData = null;
-      // @ts-ignore
-      mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
-      // @ts-ignore
-      mediaInfo.metadata.metadataType = chrome.cast.media.StreamType.BUFFERED;
-      // @ts-ignore
-      mediaInfo.metadata.title = mediaData.title;
-      mediaInfo.duration = null;
+  
       // @ts-ignore
       const request = new chrome.cast.media.LoadRequest(mediaInfo);
       castSession.loadMedia(request).then(() => {
         this.playerHandler.setLoaded();
-        // console.log('Media loaded successfully');
-        // // @ts-ignore
-        // const tracksInfoRequest = new chrome.cast.media.EditTracksInfoRequest([1]);
-        // castSession.c.media.editTracksInfo(tracksInfoRequest, s => console.log('Subtitles loaded'), e => console.log(e));
+        this.loader$.next(false);
       });
     };
     playerTarget.getCurrentMediaTime = () => {
