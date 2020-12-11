@@ -1,4 +1,4 @@
-<video *ngIf="videoSelectedSubject | async as videoSelected" controls crossorigin="anonymous">
+<video *ngIf="videoSelectedSubject | async as videoSelected" autoplay controls crossorigin="anonymous">
 	<source [src]="videoSelected.videoSrc" [type]="videoSelected.videoType">
 	<track [src]="videoSelected.subtitleSrc" default kind="subtitles" label="Português" srclang="pt-br">
 </video>

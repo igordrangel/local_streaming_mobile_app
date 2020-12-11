@@ -51,7 +51,10 @@ export class VideoComponent implements OnInit {
     await KlDelay.waitFor(50);
     const sourceMedia = `http://${IP()}:3000/video/${this.id}/${arquivo.filename}`;
     this.videoSelectedSubject.next({
-      subtitleSrc: `http://${IP()}:3000/video/${this.id}/${arquivo.legendaFilename.replace('.srt', '.vtt')}`,
+      subtitleSrc: (arquivo.legendaFilename ?
+          `http://${IP()}:3000/video/${this.id}/${arquivo.legendaFilename.replace('.srt', '.vtt')}` :
+          null
+      ),
       videoSrc: sourceMedia,
       videoType: arquivo.type,
       title: this.video.tituloOriginal,
