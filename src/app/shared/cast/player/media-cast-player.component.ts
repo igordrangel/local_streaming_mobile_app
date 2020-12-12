@@ -4,6 +4,10 @@ import { debounceTime } from 'rxjs/operators';
 import { MatSliderChange } from '@angular/material/slider';
 import { MediaCastService } from '../media-cast.service';
 import { PlayerHandler } from './player-handler';
+// @ts-ignore
+import RemotePlayer = cast.framework.RemotePlayer;
+// @ts-ignore
+import RemotePlayerController = cast.framework.RemotePlayerController;
 
 export interface MediaInterface {
   title: string;
@@ -31,8 +35,8 @@ export class MediaCastPlayerComponent implements AfterViewInit {
   public playerHandler: PlayerHandler;
   public loader$ = new BehaviorSubject<boolean>(false);
   private intervalTimer: number;
-  private remotePlayer: any;
-  private remotePlayerController: any;
+  private remotePlayer: RemotePlayer;
+  private remotePlayerController: RemotePlayerController;
   
   constructor(public mediaCastService: MediaCastService) {}
   
@@ -153,7 +157,6 @@ export class MediaCastPlayerComponent implements AfterViewInit {
       mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
       // @ts-ignore
       mediaInfo.metadata.metadataType = chrome.cast.media.StreamType.BUFFERED;
-      // @ts-ignore
       mediaInfo.metadata.title = mediaData.title;
       mediaInfo.metadata.subtitle = mediaData.subtitle;
   

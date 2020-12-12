@@ -16,6 +16,13 @@
 <body class="mat-typography">
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
+  <script>
+	  window['__onGCastApiAvailable'] = function (isAvailable) {
+		  if (isAvailable) {
+			  localStorage.setItem('__onGCastApiAvailable', 'available');
+		  }
+	  };
+  </script>
   <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"
           type="text/javascript"></script>
 </body>

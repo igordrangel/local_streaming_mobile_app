@@ -2,7 +2,7 @@
 	<h1>{{media.title}}</h1>
 	<small>{{media.subtitle}}</small>
 	<div class="container-video">
-		<video #video crossorigin="anonymous">
+		<video #video>
 			<source [src]="media.videoSrc" [type]="media.videoType">
 			<track [src]="media.subtitleSrc" default kind="subtitles" label="Português" srclang="pt-br">
 		</video>

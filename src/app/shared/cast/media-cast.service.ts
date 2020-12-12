@@ -26,7 +26,10 @@ export class MediaCastService {
     // @ts-ignore
     cast.framework.CastContext.getInstance().setOptions({
       // @ts-ignore
-      receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID
+      receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+      // @ts-ignore
+      autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
+      language: 'javascript'
     });
     
     // @ts-ignore
