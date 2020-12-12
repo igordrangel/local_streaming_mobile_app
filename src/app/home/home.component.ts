@@ -22,8 +22,12 @@ export class HomeComponent {
   ) {}
   
   public buscar(tipo?: VideoTipoEnum) {
+    const filter = {sort: 'e.id', order: 'DESC', page: 0, limit: 10, tipo: null};
+    if (tipo) {
+      filter.tipo = tipo;
+    }
     return this.localStreamingService
-               .getLista(tipo ? {tipo} : null)
+               .getLista(filter)
                .pipe(switchMap(videos => {
                  return new Observable<VideoInterface[]>(observe => {
                    videos.map(video => {

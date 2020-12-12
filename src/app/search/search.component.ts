@@ -7,6 +7,7 @@ import { LocalStreamingService } from '../core/local-streaming.service';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { PosterInterface } from '../core/interfaces/poster.interface';
 import { VideoCategoriaEnumTranslate } from '../core/enums/translate/video-categoria.enum.translate';
+import { koala } from 'koala-utils';
 
 @Component({
   templateUrl: 'search.component.html',
@@ -41,7 +42,17 @@ export class SearchComponent implements OnInit {
   
   private getLista() {
     return this.localStreamingService
-               .getLista(this.dynamicFormService.emitData(this.formFilter))
+               .getLista(
+                 koala(this.dynamicFormService.emitData(this.formFilter))
+                   .object()
+                   .merge({
+                     order: 'e.id',
+                     sort: 'DESC',
+                     page: 0,
+                     limit: 100
+                   })
+                   .getValue()
+               )
                .pipe(switchMap(videos => {
                  return new Observable<VideoInterface[]>(observe => {
                    videos.map(video => {
