@@ -112,7 +112,7 @@ export class MediaCastPlayerComponent implements AfterViewInit {
     };
     playerTarget.fullscreen = async () => {
       await this.videoRef.nativeElement.requestFullscreen({
-        navigationUI: 'auto'
+        navigationUI: 'hide'
       });
     };
     playerTarget.getCurrentMediaTime = () => {
