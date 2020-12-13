@@ -34,5 +34,8 @@ input::placeholder,
 .mat-form-field-appearance-fill .mat-form-field-underline::before,
 .mat-form-field-ripple {background: transparent !important;}
 .mat-divider {border-top-color: rgba(255, 255, 255, .12)}
-.mat-slider-track-background {background-color: #1E88E5;}
+.mat-slider-track-background,
+.mat-slider:hover .mat-slider-track-background,
+.cdk-focused .mat-slider-track-background {background-color: #1E88E5 !important;}
+.mat-slider-horizontal .mat-slider-ticks {background-image: none;}
 .mat-accent .mat-slider-track-fill, .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label {background-color: #1976D2;}

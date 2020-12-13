@@ -52,6 +52,10 @@ export class PlayerHandler {
     }
   }
   
+  public toggleSubtitle() {
+    this.target.toggleSubtitle();
+  }
+  
   public load(media: MediaInterface) {
     this.player.playerState = PLAYER_STATE.LOADING;
     

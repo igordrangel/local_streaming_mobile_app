@@ -22,9 +22,9 @@ export class HomeComponent {
   ) {}
   
   public buscar(tipo?: VideoTipoEnum) {
-    const filter = {sort: 'e.id', order: 'DESC', page: 0, limit: 10, tipo: null};
-    if (tipo) {
-      filter.tipo = tipo;
+    const filter = {sort: 'e.id', order: 'DESC', page: 0, limit: 10, tipo};
+    if (!tipo) {
+      delete filter.tipo;
     }
     return this.localStreamingService
                .getLista(filter)

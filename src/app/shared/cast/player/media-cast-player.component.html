@@ -2,9 +2,10 @@
 	<h1>{{media.title}}</h1>
 	<small>{{media.subtitle}}</small>
 	<div class="container-video">
-		<video #video>
+		<video #video crossorigin="anonymous">
 			<source [src]="media.videoSrc" [type]="media.videoType">
-			<track [src]="media.subtitleSrc" default kind="subtitles" label="Português" srclang="pt-br">
+			<track #subtitle *ngIf="subtitleOn$ | async" [src]="media.subtitleSrc" default kind="subtitles" label="Português"
+			       srclang="pt-br">
 		</video>
 		<div *ngIf="loader$ | async" class="loader">
 			<mat-spinner diameter="50"></mat-spinner>
@@ -20,9 +21,15 @@
 		<button (click)="playerHandler.pause()" *ngIf="!(isPaused$ | async)" class="pause" mat-icon-button>
 			<mat-icon>pause</mat-icon>
 		</button>
-		<button class="subtitle" mat-icon-button>
-			<mat-icon>subtitles</mat-icon>
+		<button (click)="playerHandler.toggleSubtitle()" *ngIf="media.subtitleSrc else notSubtitle" class="subtitle"
+		        mat-icon-button>
+			<mat-icon>{{(subtitleOn$ | async) ? 'subtitles' : 'subtitles_off'}}</mat-icon>
 		</button>
+		<ng-template #notSubtitle>
+			<button class="subtitle" disabled mat-icon-button>
+				<mat-icon>closed_caption_disabled</mat-icon>
+			</button>
+		</ng-template>
 	</div>
 	<div *ngIf="controlsReproduction$ | async as controlReproduction" class="content-progress-bar">
 		<span>{{controlReproduction.labelCurrentTime}}</span>

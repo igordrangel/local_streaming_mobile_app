@@ -31,6 +31,7 @@ export class MediaCastPlayerComponent implements AfterViewInit {
     duration: number;
   }>(null);
   @ViewChild('video', {static: false}) public videoRef: ElementRef<HTMLVideoElement>;
+  public subtitleOn$ = new BehaviorSubject<boolean>(false);
   public isPaused$ = new BehaviorSubject<boolean>(true);
   public playerHandler: PlayerHandler;
   public loader$ = new BehaviorSubject<boolean>(false);
@@ -105,6 +106,9 @@ export class MediaCastPlayerComponent implements AfterViewInit {
       this.isPaused$.next(this.playerHandler.isPaused());
       this.initTimer();
       this.calcTimer();
+    };
+    playerTarget.toggleSubtitle = () => {
+      this.subtitleOn$.next(!this.subtitleOn$.getValue());
     };
     playerTarget.getCurrentMediaTime = () => {
       return this.videoRef.nativeElement.currentTime;
