@@ -12,8 +12,8 @@
 		</div>
 	</div>
 	<div class="controls-reproduction">
-		<button (click)="playerHandler.stop()" class="stop" mat-icon-button>
-			<mat-icon>stop</mat-icon>
+		<button (click)="playerHandler.fullscreen()" class="stop" mat-icon-button>
+			<mat-icon>fullscreen</mat-icon>
 		</button>
 		<button (click)="playerHandler.play()" *ngIf="isPaused$ | async" class="play" mat-icon-button>
 			<mat-icon>play_arrow</mat-icon>

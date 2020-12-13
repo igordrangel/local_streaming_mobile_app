@@ -52,6 +52,10 @@ export class PlayerHandler {
     }
   }
   
+  public fullscreen() {
+    this.target.fullscreen();
+  }
+  
   public toggleSubtitle() {
     this.target.toggleSubtitle();
   }

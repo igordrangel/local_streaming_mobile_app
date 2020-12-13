@@ -110,6 +110,11 @@ export class MediaCastPlayerComponent implements AfterViewInit {
     playerTarget.toggleSubtitle = () => {
       this.subtitleOn$.next(!this.subtitleOn$.getValue());
     };
+    playerTarget.fullscreen = async () => {
+      await this.videoRef.nativeElement.requestFullscreen({
+        navigationUI: 'auto'
+      });
+    };
     playerTarget.getCurrentMediaTime = () => {
       return this.videoRef.nativeElement.currentTime;
     };
