@@ -18,13 +18,13 @@ export class SearchComponent implements OnInit {
   public formFilterConfig: KoalaDynamicFormFieldInterface[];
   public videos$: Observable<VideoInterface[]>;
   public categoriaTranslate = VideoCategoriaEnumTranslate;
-  
+
   constructor(
     private fb: FormBuilder,
     private dynamicFormService: KoalaDynamicFormService,
     private localStreamingService: LocalStreamingService
   ) {}
-  
+
   ngOnInit() {
     this.formFilter = this.fb.group({});
     this.formFilterConfig = [{
@@ -39,15 +39,15 @@ export class SearchComponent implements OnInit {
     }];
     setTimeout(() => this.videos$ = this.getLista(), 1);
   }
-  
+
   private getLista() {
     return this.localStreamingService
                .getLista(
                  koala(this.dynamicFormService.emitData(this.formFilter))
                    .object()
                    .merge({
-                     order: 'e.id',
-                     sort: 'DESC',
+                     sort: 'e.id',
+                     order: 'DESC',
                      page: 0,
                      limit: 100
                    })
@@ -58,7 +58,7 @@ export class SearchComponent implements OnInit {
                    videos.map(video => {
                      video.poster = new BehaviorSubject<PosterInterface>({
                        src: './assets/poster-default.jpg',
-                       alt: 'Video de Teste'
+                       alt: video.tituloOriginal
                      });
                    });
                    observe.next(videos);
