@@ -1,5 +1,12 @@
 .video-content {display: flex;flex-direction: column;justify-content: space-between;max-height: 100%;}
-.video-info {overflow: auto;height: 100%;}
+.btn-close {float: right;top: 25px;right: 20px;z-index: 2;}
+.btn-close mat-icon {font-size: 36px;width: 36px;height: 36px;line-height: 36px;}
+.video-info {position: absolute;background: #242424;height: 90%;width: 100%;border-radius: 20px 20px 0 0;box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.3);transition: .3s;z-index: 2;}
+.video-info.show {top: 10%;height: 90%;}
+.video-info.hide {top: calc(90% - 70px);height: 20%;}
+.video-info.show.mini-player {height: calc(90% - 128px);}
+.video-info.hide.mini-player {top: calc(90% - 148px);}
+.video-info mat-action-list {overflow: auto;height: calc(100% - 90px);}
 .video-info mat-list-item {color: #FFFFFF;}
 .video-info mat-list-item.active {background: rgba(255, 255, 255, .1);}
 .video-info .temporada {color: rgba(255, 255, 255, .56);}

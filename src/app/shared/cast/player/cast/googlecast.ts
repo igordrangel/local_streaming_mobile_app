@@ -1,4 +1,5 @@
 import { KlDelay } from "koala-utils/dist/utils/KlDelay";
+import { GoogleCastState } from "../../media-cast.service";
 
 // @ts-ignore
 if (window.chrome && !window.chrome.cast) {

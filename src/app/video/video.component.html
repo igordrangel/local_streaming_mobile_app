@@ -1,6 +1,9 @@
 <div class="video-content">
   <media-cast-player [media$]="videoSelectedSubject"></media-cast-player>
-  <div *ngIf="video" class="video-info">
+  <div *ngIf="video" class="video-info" [ngClass]="{'show': showList$ | async, 'hide': !(showList$ | async), 'mini-player': miniPlayer$ | async}">
+    <button (click)="collapseList()" class="btn-close" mat-icon-button>
+      <mat-icon>{{(showList$ | async) ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</mat-icon>
+    </button>
     <mat-list>
       <mat-list-item>
         <mat-icon mat-list-icon>{{video.tipo === tipoEnum.filme ? 'movie' : 'videocam'}}</mat-icon>
@@ -8,8 +11,8 @@
         <small mat-line>{{categoriaTranslate.translate(video.categoria).name}}</small>
       </mat-list-item>
     </mat-list>
+    <mat-divider></mat-divider>
     <mat-action-list *ngFor="let item of getListaArquivos()">
-      <mat-divider></mat-divider>
       <h3 *ngIf="item.temporada" class="temporada" mat-subheader>{{item.temporada}}ª Temporada</h3>
       <mat-list-item (click)="selectVideo(arquivo)" *ngFor="let arquivo of item.arquivos"
                      [ngClass]="{'active': verifyActiveVideo(arquivo)}">

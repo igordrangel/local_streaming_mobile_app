@@ -14,6 +14,7 @@ export class GoogleCastState {
   public static isPaused = new BehaviorSubject<boolean>(false);
   public static isAvailable = new BehaviorSubject<boolean>(false);
   public static isConnected = new BehaviorSubject<boolean>(false);
+  public static changeVideo = new BehaviorSubject<boolean>(false);
   public static googleCast = new Castjs();
 }
 
@@ -29,6 +30,7 @@ export class MediaCastService {
   }
 
   public cast(video: VideoCast, enableSubtitle = false) {
+    GoogleCastState.changeVideo.next(true);
     GoogleCastState.googleCast.cast(video.videoSrc, {
       poster: video.posterSrc,
       title: video.title,

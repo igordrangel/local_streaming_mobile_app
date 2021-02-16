@@ -28,36 +28,33 @@ export class MiniPlayerComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe(async event => {
       if (event instanceof NavigationEnd) {
-        const hide = event.url.indexOf('/video/' + localStorage.getItem(ID_VIDEO_STORAGE_NAME)) >= 0;
+        const hide = this.isCurrentVideoPage();
         this.animateHide$.next(hide);
         await KlDelay.waitFor(300);
         this.hide$.next(hide);
       }
     });
 
-    GoogleCastState.isConnected.subscribe(async isConnected => {
-      this.animateHide$.next(!isConnected);
-      await KlDelay.waitFor(300);
-      this.video$.next(isConnected ? {
-        poster: GoogleCastState.googleCast.poster,
-        title: GoogleCastState.googleCast.title,
-        subtitle: GoogleCastState.googleCast.description
-      } : null);
-      if (!isConnected) {
-        localStorage.removeItem(ID_VIDEO_STORAGE_NAME);
-      }
-    });
-    setTimeout(async () => {
-      this.animateHide$.next(!GoogleCastState.googleCast.connected);
-      await KlDelay.waitFor(300);
-      this.video$.next(GoogleCastState.googleCast.connected ? {
-        poster: GoogleCastState.googleCast.poster,
-        title: GoogleCastState.googleCast.title,
-        subtitle: GoogleCastState.googleCast.description
-      } : null);
-      if (!GoogleCastState.googleCast.connected) {
-        localStorage.removeItem(ID_VIDEO_STORAGE_NAME);
-      }
-    }, 500);
+    GoogleCastState.isConnected.subscribe(async () => await this.updateState())
+    GoogleCastState.changeVideo.subscribe(async () => await this.updateState());
+    setTimeout(async () => await this.updateState(), 500);
+  }
+
+  private isCurrentVideoPage() {
+    return location.href.indexOf('/video/' + localStorage.getItem(ID_VIDEO_STORAGE_NAME)) >= 0;
+  }
+
+  private async updateState() {
+    this.animateHide$.next(!GoogleCastState.googleCast.connected);
+    await KlDelay.waitFor(300);
+    this.hide$.next(this.isCurrentVideoPage());
+    this.video$.next(GoogleCastState.googleCast.connected ? {
+      poster: GoogleCastState.googleCast.poster,
+      title: GoogleCastState.googleCast.title,
+      subtitle: GoogleCastState.googleCast.description
+    } : null);
+    if (!GoogleCastState.googleCast.connected) {
+      localStorage.removeItem(ID_VIDEO_STORAGE_NAME);
+    }
   }
 }

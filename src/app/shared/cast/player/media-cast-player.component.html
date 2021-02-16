@@ -1,4 +1,16 @@
 <div *ngIf="media$ | async as media" class="content-player">
+  <div class="float-buttons">
+    <button (click)="toggleCaption()" *ngIf="media.subtitleSrc else notSubtitle" class="subtitle"
+            mat-icon-button>
+      <mat-icon>{{(subtitleOn$ | async) ? 'subtitles' : 'subtitles_off'}}</mat-icon>
+    </button>
+    <ng-template #notSubtitle>
+      <button class="subtitle" disabled mat-icon-button>
+        <mat-icon>closed_caption_disabled</mat-icon>
+      </button>
+    </ng-template>
+    <media-cast *ngIf="(videoCast$ | async) as videoCast" [video]="videoCast" [enableSubtitle]="subtitleOn$"></media-cast>
+  </div>
 	<h1>{{media.title}}</h1>
 	<small>{{media.subtitle}}</small>
 	<div class="container-video">
@@ -6,18 +18,6 @@
 		<div *ngIf="loader$ | async" class="loader">
 			<mat-spinner diameter="50"></mat-spinner>
 		</div>
-    <div class="float-buttons">
-      <button (click)="toggleCaption()" *ngIf="media.subtitleSrc else notSubtitle" class="subtitle"
-              mat-icon-button>
-        <mat-icon>{{(subtitleOn$ | async) ? 'subtitles' : 'subtitles_off'}}</mat-icon>
-      </button>
-      <ng-template #notSubtitle>
-        <button class="subtitle" disabled mat-icon-button>
-          <mat-icon>closed_caption_disabled</mat-icon>
-        </button>
-      </ng-template>
-      <media-cast *ngIf="(videoCast$ | async) as videoCast" [video]="videoCast" [enableSubtitle]="subtitleOn$"></media-cast>
-    </div>
 	</div>
   <controls *ngIf="media.videoSrc"></controls>
 	<div *ngIf="media.videoSrc && mediaProgress$ | async as mediaProgress" class="content-progress-bar">
