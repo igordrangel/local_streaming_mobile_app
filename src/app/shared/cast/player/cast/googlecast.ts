@@ -91,6 +91,7 @@ export class Castjs {
     this._controller.addEventListener('volumeLevelChanged', this._volumeLevelChanged.bind(this));
     this._controller.addEventListener('playerStateChanged', this._playerStateChanged.bind(this));
     this.available = true;
+    this.trigger('available');
   }
 
   _isMediaLoadedChanged() {

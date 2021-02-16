@@ -22,7 +22,7 @@ export class MediaCastService {
 
   public init() {
     GoogleCastState.isPaused.subscribe(isPaused => isPaused ? GoogleCastState.googleCast.pause() : GoogleCastState.googleCast.play());
-    GoogleCastState.isAvailable.next(true);
+    GoogleCastState.isAvailable.next(GoogleCastState.googleCast.available);
     GoogleCastState.isConnected.next(GoogleCastState.googleCast.connected);
     GoogleCastState.googleCast.on('connect', () => GoogleCastState.isConnected.next(true));
     GoogleCastState.googleCast.on('disconnect', () => GoogleCastState.isConnected.next(false));
