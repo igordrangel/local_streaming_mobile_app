@@ -60,6 +60,9 @@ export class VideoComponent implements OnInit, OnDestroy {
                 this.showList$.next(!GoogleCastState.googleCast.connected);
                 this.subscriptionGoogleCastConnection = GoogleCastState.isConnected.subscribe(isConnected => {
                   this.showList$.next(!isConnected);
+                  if (!isConnected) {
+                    this.miniPlayer$.next(false);
+                  }
                 });
                 await KlDelay.waitFor(300);
                 if (this.miniPlayer$.getValue()) {
