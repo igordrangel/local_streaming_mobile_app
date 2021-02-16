@@ -3,6 +3,7 @@
 .container-video .loader {align-items: center;display: flex;height: 200px;justify-content: center;position: absolute;top: 0;width: 100%;}
 h1 {font-family: 'Open Sans', sans-serif;margin: 0;padding: 25px 0 0;text-align: center;}
 small {display: block;font-family: 'Open Sans', sans-serif;padding: 0 0 25px;text-align: center;width: 100%;}
+.float-buttons {position: absolute;top: -38px;right: 5px;}
 .controls-reproduction {align-items: center;display: flex;justify-content: center;width: 100%;}
 .controls-reproduction button {margin: 0 20px;}
 .controls-reproduction .stop,
@@ -13,4 +14,5 @@ small {display: block;font-family: 'Open Sans', sans-serif;padding: 0 0 25px;tex
 .controls-reproduction .subtitle mat-icon {font-size: 30px;height: 30px;line-height: 30px;width: 30px;}
 .controls-reproduction .play mat-icon,
 .controls-reproduction .pause mat-icon {font-size: 60px;height: 60px;line-height: 60px;width: 60px;}
-.content-progress-bar {align-items: center;display: flex;justify-content: space-evenly;width: 100%;}
+.content-progress-bar {align-items: center;display: flex;justify-content: center;width: 100%;}
+.content-progress-bar mat-slider {width: calc(100% - 180px);margin: 0 5px;}

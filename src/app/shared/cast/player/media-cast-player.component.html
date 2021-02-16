@@ -2,45 +2,45 @@
 	<h1>{{media.title}}</h1>
 	<small>{{media.subtitle}}</small>
 	<div class="container-video">
-		<video #video crossorigin="anonymous">
+		<video #video crossorigin="anonymous" [poster]="media.posterSrc">
 			<source [src]="media.videoSrc" [type]="media.videoType">
-			<track #subtitle *ngIf="subtitleOn$ | async" [src]="media.subtitleSrc" default kind="subtitles" label="Português"
-			       srclang="pt-br">
 		</video>
 		<div *ngIf="loader$ | async" class="loader">
 			<mat-spinner diameter="50"></mat-spinner>
 		</div>
+    <div class="float-buttons">
+      <button (click)="toggleCaption()" *ngIf="media.subtitleSrc else notSubtitle" class="subtitle"
+              mat-icon-button>
+        <mat-icon>{{(subtitleOn$ | async) ? 'subtitles' : 'subtitles_off'}}</mat-icon>
+      </button>
+      <ng-template #notSubtitle>
+        <button class="subtitle" disabled mat-icon-button>
+          <mat-icon>closed_caption_disabled</mat-icon>
+        </button>
+      </ng-template>
+      <media-cast *ngIf="(videoCast$ | async) as videoCast" [video]="videoCast" [enableSubtitle]="subtitleOn$"></media-cast>
+    </div>
 	</div>
 	<div class="controls-reproduction">
-		<button (click)="playerHandler.fullscreen()" class="stop" mat-icon-button>
-			<mat-icon>fullscreen</mat-icon>
+		<button (click)="mediaCastService.back()" class="stop" mat-icon-button>
+			<mat-icon>replay_10</mat-icon>
 		</button>
-		<button (click)="playerHandler.play()" *ngIf="isPaused$ | async" class="play" mat-icon-button>
-			<mat-icon>play_arrow</mat-icon>
+		<button (click)="mediaCastService.playPause()" class="play pause" mat-icon-button>
+			<mat-icon>{{(isPaused$ | async) ? 'play_arrow' : 'pause'}}</mat-icon>
 		</button>
-		<button (click)="playerHandler.pause()" *ngIf="!(isPaused$ | async)" class="pause" mat-icon-button>
-			<mat-icon>pause</mat-icon>
-		</button>
-		<button (click)="playerHandler.toggleSubtitle()" *ngIf="media.subtitleSrc else notSubtitle" class="subtitle"
-		        mat-icon-button>
-			<mat-icon>{{(subtitleOn$ | async) ? 'subtitles' : 'subtitles_off'}}</mat-icon>
-		</button>
-		<ng-template #notSubtitle>
-			<button class="subtitle" disabled mat-icon-button>
-				<mat-icon>closed_caption_disabled</mat-icon>
-			</button>
-		</ng-template>
+    <button (click)="mediaCastService.forward()" class="stop" mat-icon-button>
+      <mat-icon>forward_10</mat-icon>
+    </button>
 	</div>
-	<div *ngIf="controlsReproduction$ | async as controlReproduction" class="content-progress-bar">
-		<span>{{controlReproduction.labelCurrentTime}}</span>
+	<div *ngIf="mediaProgress$ | async as mediaProgress" class="content-progress-bar">
+		<span>{{mediaProgress.timePretty}}</span>
 		<mat-slider
-			(change)="timeChange($event)"
-			(click)="playerHandler.pause()"
-			[max]="controlReproduction.duration"
+			(change)="seek($event)"
+			[max]="mediaProgress.duration"
 			[min]="0"
-			[value]="controlReproduction.currentTime"
+			[value]="mediaProgress.time"
 			tickInterval="1000">
 		</mat-slider>
-		<span>{{controlReproduction.labelDurationTime}}</span>
+		<span>{{mediaProgress.durationPretty}}</span>
 	</div>
 </div>

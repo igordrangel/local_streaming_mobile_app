@@ -1,6 +1,8 @@
 section {display: flex;flex-direction: column;flex-wrap: wrap;width: 100%;}
 section h2 {width: 100%;}
+.mat-card {background: transparent!important;width: 180px;}
 .content-videos {box-sizing: border-box;display: flex;overflow: auto;padding: 0 10px;width: 100%;}
-.card-video {display: inline-block;height: 250px;margin: 5px;padding: 0;position: relative;}
+.card-video {display: inline-block;height: 290px;margin: 5px;padding: 0;position: relative;}
 .card-video img {height: 250px;margin: 0;width: 180px;}
+.card-video h4 {color: #fff;text-align: center;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;width: 100%;}
 .loader {align-items: center;display: flex;height: 100%;justify-content: center;width: 100%;}

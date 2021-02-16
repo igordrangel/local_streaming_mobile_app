@@ -26,12 +26,12 @@ export class VideoComponent implements OnInit {
   public categoriaTranslate = VideoCategoriaEnumTranslate;
   public tipoEnum = VideoTipoEnum;
   private id: number;
-  
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private localStreamingService: LocalStreamingService
   ) {}
-  
+
   ngOnInit() {
     this.activatedRoute
         .paramMap
@@ -45,7 +45,7 @@ export class VideoComponent implements OnInit {
               });
         });
   }
-  
+
   public async selectVideo(arquivo: VideoArquivoInterface) {
     this.videoSelectedSubject.next(null);
     await KlDelay.waitFor(50);
@@ -61,19 +61,19 @@ export class VideoComponent implements OnInit {
       subtitle: arquivo.titulo
     });
   }
-  
+
   public verifyActiveVideo(arquivo: VideoArquivoInterface) {
     return arquivo ?
       this.videoSelectedSubject.getValue()?.videoSrc.indexOf(arquivo.filename) >= 0 :
       false;
   }
-  
+
   public getListaArquivos(): ListaArquivos[] {
     return koala(this.video.arquivos)
       .array<VideoArquivoInterface>()
       .pipe(klArray => {
         const listaArquivos: ListaArquivos[] = [];
-        
+
         klArray.getValue().forEach(arquivo => {
           const index = koala(listaArquivos).array<ListaArquivos>().getIndex('temporada', arquivo.temporada);
           if (index >= 0) {
@@ -85,7 +85,7 @@ export class VideoComponent implements OnInit {
             });
           }
         });
-        
+
         return listaArquivos;
       })
       .orderBy('temporada')
