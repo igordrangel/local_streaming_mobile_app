@@ -3,6 +3,7 @@ import { MiniPlayerComponent } from "./mini-player.component";
 import { CommonModule } from "@angular/common";
 import { ControlsModule } from "../controls/controls.module";
 import { MatRippleModule } from "@angular/material/core";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   exports: [
@@ -13,6 +14,7 @@ import { MatRippleModule } from "@angular/material/core";
   ],
   imports: [
     CommonModule,
+    RouterModule,
     ControlsModule,
     MatRippleModule
   ]

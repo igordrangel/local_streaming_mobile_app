@@ -19,8 +19,8 @@
       <media-cast *ngIf="(videoCast$ | async) as videoCast" [video]="videoCast" [enableSubtitle]="subtitleOn$"></media-cast>
     </div>
 	</div>
-  <controls></controls>
-	<div *ngIf="mediaProgress$ | async as mediaProgress" class="content-progress-bar">
+  <controls *ngIf="media.videoSrc"></controls>
+	<div *ngIf="media.videoSrc && mediaProgress$ | async as mediaProgress" class="content-progress-bar">
 		<span>{{mediaProgress.timePretty}}</span>
 		<mat-slider
 			(change)="seek($event)"

@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { GoogleCastState, MediaCastService, VideoCast } from './media-cast.service';
 import { BehaviorSubject } from "rxjs";
+import { ID_VIDEO_STORAGE_NAME } from "../../video/video.component";
 
 @Component({
   selector: 'media-cast',
@@ -21,11 +22,11 @@ export class MediaCastButtonComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.firstLoad);
     if (!this.firstLoad && this.isConnected$.getValue()) {
       this.cast(false, this.enableSubtitle.getValue());
     } else if (this.firstLoad && this.isConnected$.getValue()) {
       this.firstLoad = false;
+      this.setIdVideoInStorage(false);
     }
   }
 
@@ -36,8 +37,17 @@ export class MediaCastButtonComponent implements OnChanges {
       (this.isConnected$.getValue() && !disconnect)
     ) {
       this.mediaCastService.cast(this.video, enableSubtitle);
+      this.setIdVideoInStorage();
     } else if (this.isConnected$.getValue() && disconnect) {
       this.mediaCastService.disconnect();
+    }
+  }
+
+  private setIdVideoInStorage(update = true) {
+    if (update || (!update && !localStorage.getItem(ID_VIDEO_STORAGE_NAME))) {
+      const arrVideoUrl = location.href.split('/');
+      const idVideo = arrVideoUrl[arrVideoUrl.length - 1];
+      localStorage.setItem(ID_VIDEO_STORAGE_NAME, idVideo);
     }
   }
 }

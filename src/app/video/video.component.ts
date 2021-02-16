@@ -11,6 +11,8 @@ import { koala } from 'koala-utils';
 import { MediaInterface } from '../shared/cast/player/media-cast-player.component';
 import { GoogleCastState } from "../shared/cast/media-cast.service";
 
+export const ID_VIDEO_STORAGE_NAME = 'lsIdCurrentVideo';
+
 interface ListaArquivos {
   temporada: number;
   arquivos: VideoArquivoInterface[];
@@ -45,7 +47,7 @@ export class VideoComponent implements OnInit {
                 let indexVideo = 0;
                 await KlDelay.waitFor(500);
                 if (GoogleCastState.googleCast.connected) {
-                  indexVideo = koala(this.video.arquivos).array().getIndex('titulo', GoogleCastState.googleCast.description) ?? 0;
+                  indexVideo = koala(this.video.arquivos).array().getIndex('titulo', GoogleCastState.googleCast.description);
                 }
                 await this.selectVideo(this.video.arquivos[indexVideo]);
               });
@@ -55,16 +57,16 @@ export class VideoComponent implements OnInit {
   public async selectVideo(arquivo: VideoArquivoInterface) {
     this.videoSelectedSubject.next(null);
     await KlDelay.waitFor(50);
-    const sourceMedia = `http://${IP()}:3000/video/${this.id}/${arquivo.filename}`;
+    const sourceMedia = arquivo ? `http://${IP()}:3000/video/${this.id}/${arquivo.filename}` : '';
     this.videoSelectedSubject.next({
-      subtitleSrc: (arquivo.legendaFilename ?
-          `http://${IP()}:3000/video/${this.id}/${arquivo.legendaFilename.replace('.srt', '.vtt')}` :
-          null
+      subtitleSrc: (arquivo?.legendaFilename ?
+                    `http://${IP()}:3000/video/${this.id}/${arquivo.legendaFilename.replace('.srt', '.vtt')}` :
+                    null
       ),
       videoSrc: sourceMedia,
-      videoType: arquivo.type,
+      videoType: arquivo?.type ?? null,
       title: this.video.tituloOriginal,
-      subtitle: arquivo.titulo
+      subtitle: arquivo?.titulo ?? null
     });
   }
 

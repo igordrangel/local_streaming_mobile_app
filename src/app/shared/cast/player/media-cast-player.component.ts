@@ -65,26 +65,28 @@ export class MediaCastPlayerComponent implements AfterViewInit, OnInit, OnDestro
 
   ngAfterViewInit() {
     this.media$.pipe(debounceTime(1000)).subscribe(media => {
-      const video: VideoCast = {
-        posterSrc: location.origin + '/assets/poster-default.jpg',
-        title: media.title,
-        description: media.subtitle,
-        videoSrc: media.videoSrc,
-        subtitleSrc: media.subtitleSrc
-      };
-      this.imdbService
-          .getBanner(media.title)
-          .subscribe(poster => {
-            this.media$.getValue().posterSrc = poster;
-            video.posterSrc = poster;
-            this.videoCast$.next(video);
-            this.loader$.next(false);
-          }, () => {
-            this.media$.getValue().posterSrc = './assets/movietime.jpg';
-            video.posterSrc = './assets/poster-default.jpg';
-            this.loader$.next(false);
-            this.videoCast$.next(video);
-          });
+      if (media) {
+        const video: VideoCast = {
+          posterSrc: location.origin + '/assets/poster-default.jpg',
+          title: media.title,
+          description: media.subtitle,
+          videoSrc: media.videoSrc,
+          subtitleSrc: media.subtitleSrc
+        };
+        this.imdbService
+            .getBanner(media.title)
+            .subscribe(poster => {
+              this.media$.getValue().posterSrc = poster;
+              video.posterSrc = poster;
+              this.videoCast$.next(video);
+              this.loader$.next(false);
+            }, () => {
+              this.media$.getValue().posterSrc = './assets/movietime.jpg';
+              video.posterSrc = './assets/poster-default.jpg';
+              this.loader$.next(false);
+              this.videoCast$.next(video);
+            });
+      }
     });
   }
 
