@@ -1,0 +1,32 @@
+name: PUBLISH DOC
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    name: 'production'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2.3.2
+        
+      - name: Use Node.js 12
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+      
+      - name: 🔨 Build Project
+        run: |
+          npm i @angular/cli
+          npm i
+          npm run prod
+      
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ftp.igordrangel.com.br
+          username: ls_mobile@igordrangel.com.br
+          password: ${{ secrets.FTP_LS_PASSWORD }}
+          server-dir: './dist/'
+          local-dir: './dist/'
+          dangerous-clean-slate: true
