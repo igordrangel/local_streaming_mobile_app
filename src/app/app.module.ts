@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
 import { TitleModule } from './shared/title/title.module';
 import { MediaCastModule } from './shared/cast/media-cast.module';
+import { MiniPlayerModule } from "./shared/cast/mini-player/mini-player.module";
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MediaCastModule } from './shared/cast/media-cast.module';
     KoalaQuestionModule,
     KoalaDialogModule,
     TitleModule,
+    MiniPlayerModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       registrationStrategy: 'registerImmediately'

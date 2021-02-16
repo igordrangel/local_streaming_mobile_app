@@ -1,4 +1,5 @@
-video {width: 100%;}
+.video-content {display: flex;flex-direction: column;justify-content: space-between;max-height: 100%;}
+.video-info {overflow: auto;height: 100%;}
 .video-info mat-list-item {color: #FFFFFF;}
 .video-info mat-list-item.active {background: rgba(255, 255, 255, .1);}
 .video-info .temporada {color: rgba(255, 255, 255, .56);}

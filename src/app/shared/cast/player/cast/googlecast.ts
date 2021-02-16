@@ -351,7 +351,9 @@ export class Castjs {
     // Time to request a session!
     if (this.connected) {
       this._controller.stop();
-      KlDelay.waitFor(301).then(() => this.loadMedia(request));
+      KlDelay.waitFor(301).then(async () => {
+        this.loadMedia(request);
+      });
     } else {
       // @ts-ignore
       cast.framework.CastContext.getInstance().requestSession().then(() => {
@@ -473,6 +475,7 @@ export class Castjs {
   private loadMedia(request) {
     // @ts-ignore
     cast.framework.CastContext.getInstance().getCurrentSession().loadMedia(request).then(() => {
+      this.seek(0);
       if (!this.device) {
         // @ts-ignore
         this.device = cast.framework.CastContext.getInstance().getCurrentSession().getCastDevice().friendlyName || this.device

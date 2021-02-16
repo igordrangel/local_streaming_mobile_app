@@ -38,7 +38,6 @@ export class MediaCastPlayerComponent implements AfterViewInit, OnInit, OnDestro
   });
   @ViewChild('video', {static: false}) public videoRef: ElementRef<HTMLVideoElement>;
   public subtitleOn$ = new BehaviorSubject<boolean>(false);
-  public isPaused$ = GoogleCastState.isPaused;
   public loader$ = new BehaviorSubject<boolean>(true);
   public intervalTimer = 0;
 
@@ -82,7 +81,7 @@ export class MediaCastPlayerComponent implements AfterViewInit, OnInit, OnDestro
             this.loader$.next(false);
           }, () => {
             this.media$.getValue().posterSrc = './assets/movietime.jpg';
-            video.posterSrc = './assets/movietime.jpg';
+            video.posterSrc = './assets/poster-default.jpg';
             this.loader$.next(false);
             this.videoCast$.next(video);
           });

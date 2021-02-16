@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 import { KlDelay } from 'koala-utils/dist/utils/KlDelay';
 import { koala } from 'koala-utils';
 import { MediaInterface } from '../shared/cast/player/media-cast-player.component';
+import { GoogleCastState } from "../shared/cast/media-cast.service";
 
 interface ListaArquivos {
   temporada: number;
@@ -39,9 +40,14 @@ export class VideoComponent implements OnInit {
           this.id = parseInt(param.get('id'));
           this.localStreamingService
               .getPorId(this.id)
-              .subscribe(video => {
+              .subscribe(async video => {
                 this.video = video;
-                this.selectVideo(this.video.arquivos[0]);
+                let indexVideo = 0;
+                await KlDelay.waitFor(500);
+                if (GoogleCastState.googleCast.connected) {
+                  indexVideo = koala(this.video.arquivos).array().getIndex('titulo', GoogleCastState.googleCast.description) ?? 0;
+                }
+                await this.selectVideo(this.video.arquivos[indexVideo]);
               });
         });
   }

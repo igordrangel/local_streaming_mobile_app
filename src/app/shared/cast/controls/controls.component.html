@@ -1,0 +1,11 @@
+<div class="controls-reproduction" [ngClass]="{'mini-player': miniPlayer}">
+  <button (click)="mediaCastService.back()" class="stop" mat-icon-button>
+    <mat-icon>replay_10</mat-icon>
+  </button>
+  <button (click)="mediaCastService.playPause()" class="play pause" mat-icon-button>
+    <mat-icon>{{(isPaused$ | async) ? 'play_arrow' : 'pause'}}</mat-icon>
+  </button>
+  <button (click)="mediaCastService.forward()" class="stop" mat-icon-button>
+    <mat-icon>forward_10</mat-icon>
+  </button>
+</div>

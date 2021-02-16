@@ -1,0 +1,12 @@
+<div *ngIf="!(hide$ | async) && (video$ | async) as video" matRipple class="mini-player-content" matRippleColor="rgba(255,255,255,.1)">
+  <div class="poster">
+    <img [src]="video.poster" [alt]="video.title"/>
+  </div>
+  <div class="video-data">
+    <h2>{{video.title}}</h2>
+    <small>{{video.subtitle}}</small>
+  </div>
+  <div class="controls">
+    <controls [miniPlayer]="true"></controls>
+  </div>
+</div>

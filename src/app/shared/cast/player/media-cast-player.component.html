@@ -2,9 +2,7 @@
 	<h1>{{media.title}}</h1>
 	<small>{{media.subtitle}}</small>
 	<div class="container-video">
-		<video #video crossorigin="anonymous" [poster]="media.posterSrc">
-			<source [src]="media.videoSrc" [type]="media.videoType">
-		</video>
+		<img [src]="media.posterSrc ? media.posterSrc : './assets/movietime.jpg'" [alt]="media.title"/>
 		<div *ngIf="loader$ | async" class="loader">
 			<mat-spinner diameter="50"></mat-spinner>
 		</div>
@@ -21,17 +19,7 @@
       <media-cast *ngIf="(videoCast$ | async) as videoCast" [video]="videoCast" [enableSubtitle]="subtitleOn$"></media-cast>
     </div>
 	</div>
-	<div class="controls-reproduction">
-		<button (click)="mediaCastService.back()" class="stop" mat-icon-button>
-			<mat-icon>replay_10</mat-icon>
-		</button>
-		<button (click)="mediaCastService.playPause()" class="play pause" mat-icon-button>
-			<mat-icon>{{(isPaused$ | async) ? 'play_arrow' : 'pause'}}</mat-icon>
-		</button>
-    <button (click)="mediaCastService.forward()" class="stop" mat-icon-button>
-      <mat-icon>forward_10</mat-icon>
-    </button>
-	</div>
+  <controls></controls>
 	<div *ngIf="mediaProgress$ | async as mediaProgress" class="content-progress-bar">
 		<span>{{mediaProgress.timePretty}}</span>
 		<mat-slider

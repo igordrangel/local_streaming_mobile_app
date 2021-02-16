@@ -14,17 +14,23 @@ export class MediaCastButtonComponent implements OnChanges {
   public isAvailable$ = GoogleCastState.isAvailable;
   public isConnected$ = GoogleCastState.isConnected;
 
+  private firstLoad = true;
+
   constructor(public mediaCastService: MediaCastService) {
     mediaCastService.init();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!changes.firstChange) {
+    console.log(this.firstLoad);
+    if (!this.firstLoad && this.isConnected$.getValue()) {
       this.cast(false, this.enableSubtitle.getValue());
+    } else if (this.firstLoad && this.isConnected$.getValue()) {
+      this.firstLoad = false;
     }
   }
 
   public cast(disconnect = true, enableSubtitle: boolean) {
+    this.firstLoad = false;
     if (
       (this.isAvailable$.getValue() && !this.isConnected$.getValue()) ||
       (this.isConnected$.getValue() && !disconnect)
