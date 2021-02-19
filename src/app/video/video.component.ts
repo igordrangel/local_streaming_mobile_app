@@ -53,6 +53,13 @@ export class VideoComponent implements OnInit, OnDestroy {
               .subscribe(async video => {
                 this.video = video;
                 let indexVideo = 0;
+                for (const [index, arquivo] of this.video.arquivos.entries()) {
+                  if (arquivo.current === true) {
+                    indexVideo = index;
+                    break;
+                  }
+                }
+
                 await KlDelay.waitFor(500);
                 if (GoogleCastState.googleCast.connected) {
                   indexVideo = koala(this.video.arquivos).array().getIndex('titulo', GoogleCastState.googleCast.description);

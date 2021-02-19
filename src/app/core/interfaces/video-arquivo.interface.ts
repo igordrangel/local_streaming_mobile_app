@@ -5,4 +5,5 @@ export interface VideoArquivoInterface {
 	titulo: string;
 	temporada?: number;
 	legendaFilename?: string;
+	current: boolean;
 }
