@@ -26,6 +26,7 @@ interface ListaArquivos {
 export class VideoComponent implements OnInit, OnDestroy {
   public videoSelectedSubject = new BehaviorSubject<MediaInterface>(null);
   public video: VideoInterface;
+  public playlist: ListaArquivos[];
   public categoriaTranslate = VideoCategoriaEnumTranslate;
   public tipoEnum = VideoTipoEnum;
   public showList$ = new BehaviorSubject<boolean>(false);
@@ -91,6 +92,7 @@ export class VideoComponent implements OnInit, OnDestroy {
       title: this.video.tituloOriginal,
       subtitle: arquivo?.titulo ?? null
     });
+    this.setPlaylist();
   }
 
   public verifyActiveVideo(arquivo: VideoArquivoInterface) {
@@ -99,8 +101,8 @@ export class VideoComponent implements OnInit, OnDestroy {
       false;
   }
 
-  public getListaArquivos(): ListaArquivos[] {
-    return koala(this.video.arquivos)
+  private setPlaylist() {
+    this.playlist = koala(this.video?.arquivos ?? [])
       .array<VideoArquivoInterface>()
       .pipe(klArray => {
         const listaArquivos: ListaArquivos[] = [];

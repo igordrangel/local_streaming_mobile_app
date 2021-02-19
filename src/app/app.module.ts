@@ -20,6 +20,7 @@ import { MatListModule } from '@angular/material/list';
 import { TitleModule } from './shared/title/title.module';
 import { MediaCastModule } from './shared/cast/media-cast.module';
 import { MiniPlayerModule } from "./shared/cast/mini-player/mini-player.module";
+import { MatExpansionModule } from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MiniPlayerModule } from "./shared/cast/mini-player/mini-player.module";
     MatProgressSpinnerModule,
     MatCardModule,
     MatListModule,
+    MatExpansionModule,
     KoalaFormModule,
     KoalaQuestionModule,
     KoalaDialogModule,

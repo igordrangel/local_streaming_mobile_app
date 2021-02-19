@@ -6,7 +6,7 @@
 .video-info.hide {top: calc(90% - 70px);height: 20%;}
 .video-info.show.mini-player {height: calc(90% - 128px);}
 .video-info.hide.mini-player {top: calc(90% - 148px);}
-.video-info mat-action-list {overflow: auto;height: calc(100% - 90px);}
+.video-info .playlist {display: block;overflow: auto;height: calc(100% - 135px);}
 .video-info mat-list-item {color: #FFFFFF;}
 .video-info mat-list-item.active {background: rgba(255, 255, 255, .1);}
 .video-info .temporada {color: rgba(255, 255, 255, .56);}

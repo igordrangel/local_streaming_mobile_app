@@ -33,6 +33,11 @@ input::placeholder,
 .mat-form-field-underline,
 .mat-form-field-appearance-fill .mat-form-field-underline::before,
 .mat-form-field-ripple {background: transparent !important;}
+.mat-expansion-panel,
+.mat-expansion-panel:not(.mat-expanded):not([aria-disabled=true]) .mat-expansion-panel-header:hover {background: transparent!important;box-shadow: none!important;}
+.mat-expansion-panel-header-title {color: rgba(255, 255, 255, .56);}
+.mat-expansion-indicator:after {color: #fff;}
+.mat-expansion-panel-body {padding: 0!important;margin: 0!important;}
 .mat-divider {border-top-color: rgba(255, 255, 255, .12)}
 .mat-slider-track-background,
 .mat-slider:hover .mat-slider-track-background,
