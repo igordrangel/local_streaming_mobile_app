@@ -16,6 +16,7 @@ export const ID_VIDEO_STORAGE_NAME = 'lsIdCurrentVideo';
 interface ListaArquivos {
   temporada: number;
   arquivos: VideoArquivoInterface[];
+  current: boolean;
 }
 
 @Component({
@@ -99,7 +100,18 @@ export class VideoComponent implements OnInit, OnDestroy {
       title: this.video.tituloOriginal,
       subtitle: arquivo?.titulo ?? null
     });
+    if (this.playlist) {
+      this.playlist = this.playlist.map(item => {
+        item.current = false;
+        item.arquivos = item.arquivos.map(arquivoPlaylist => {
+          arquivoPlaylist.current = arquivoPlaylist.id === arquivo.id;
+          return arquivoPlaylist;
+        })
+        return item;
+      });
+    }
     this.setPlaylist();
+    setTimeout(() => this.scrollToElementOnPlaylist(arquivo), 450);
   }
 
   public verifyActiveVideo(arquivo: VideoArquivoInterface) {
@@ -108,27 +120,40 @@ export class VideoComponent implements OnInit, OnDestroy {
       false;
   }
 
+  public getIdElement(arquivo: VideoArquivoInterface) {
+    return koala(arquivo.titulo).string().toCamelCase().getValue();
+  }
+
+  public scrollToElementOnPlaylist(arquivo: VideoArquivoInterface) {
+    document.getElementById(this.getIdElement(arquivo)).scrollIntoView();
+  }
+
   private setPlaylist() {
-    this.playlist = koala(this.video?.arquivos ?? [])
-      .array<VideoArquivoInterface>()
-      .pipe(klArray => {
-        const listaArquivos: ListaArquivos[] = [];
+    this.playlist = [];
+    setTimeout(() => {
+      this.playlist = koala(this.video?.arquivos ?? [])
+        .array<VideoArquivoInterface>()
+        .pipe(klArray => {
+          const listaArquivos: ListaArquivos[] = [];
 
-        klArray.getValue().forEach(arquivo => {
-          const index = koala(listaArquivos).array<ListaArquivos>().getIndex('temporada', arquivo.temporada);
-          if (index >= 0) {
-            listaArquivos[index].arquivos.push(arquivo);
-          } else {
-            listaArquivos.push({
-              temporada: arquivo.temporada,
-              arquivos: [arquivo]
-            });
-          }
-        });
+          klArray.getValue().forEach(arquivo => {
+            const index = koala(listaArquivos).array<ListaArquivos>().getIndex('temporada', arquivo.temporada);
+            if (index >= 0) {
+              listaArquivos[index].arquivos.push(arquivo);
+              if (arquivo.current) listaArquivos[index].current = true;
+            } else {
+              listaArquivos.push({
+                temporada: arquivo.temporada,
+                arquivos: [arquivo],
+                current: arquivo.current
+              });
+            }
+          });
 
-        return listaArquivos;
-      })
-      .orderBy('temporada')
-      .getValue();
+          return listaArquivos;
+        })
+        .orderBy('temporada')
+        .getValue();
+    }, 50);
   }
 }

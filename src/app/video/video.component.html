@@ -23,13 +23,13 @@
     </div>
     <ng-template #playlistSeries>
       <mat-accordion class="playlist">
-        <mat-expansion-panel *ngFor="let item of playlist" [expanded]="item.temporada === 1">
+        <mat-expansion-panel *ngFor="let item of playlist" [expanded]="item.current">
           <mat-expansion-panel-header>
             <mat-panel-title>{{item.temporada}}ª Temporada</mat-panel-title>
           </mat-expansion-panel-header>
 
           <mat-action-list>
-            <mat-list-item (click)="selectVideo(arquivo)" *ngFor="let arquivo of item.arquivos"
+            <mat-list-item [id]="getIdElement(arquivo)" (click)="selectVideo(arquivo)" *ngFor="let arquivo of item.arquivos"
                            [ngClass]="{'active': verifyActiveVideo(arquivo)}">
               <mat-icon mat-list-icon>play_circle</mat-icon>
               <h4 mat-line>{{arquivo.titulo}}</h4>
