@@ -1,5 +1,6 @@
 .controls-reproduction {align-items: center;display: flex;justify-content: center;width: 100%;}
-.controls-reproduction button {margin: 0 20px;}
+.controls-reproduction button {margin: 0 10px;}
+.controls-reproduction button mat-icon {font-size: 36px;height: 36px;line-height: 36px;width: 36px;}
 .controls-reproduction .play,
 .controls-reproduction .pause {height: 60px;width: 60px;}
 .controls-reproduction .play mat-icon,

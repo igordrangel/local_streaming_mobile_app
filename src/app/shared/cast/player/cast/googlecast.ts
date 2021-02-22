@@ -1,5 +1,8 @@
 import { KlDelay } from "koala-utils/dist/utils/KlDelay";
-import { GoogleCastState } from "../../media-cast.service";
+// @ts-ignore
+import RemotePlayerController = cast.framework.RemotePlayerController;
+// @ts-ignore
+import RemotePlayer = cast.framework.RemotePlayer;
 
 // @ts-ignore
 if (window.chrome && !window.chrome.cast) {
@@ -31,8 +34,8 @@ export class Castjs {
   public state = 'disconnected';
   public intervalIsAvailable = 0;
   private _events = {} as any;
-  private _player = null;
-  private _controller = null;
+  private _player: RemotePlayer = null;
+  private _controller: RemotePlayerController = null;
 
   constructor(public opt: any = {}) {
     const joinpolicies = [
