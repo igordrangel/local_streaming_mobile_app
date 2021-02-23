@@ -134,7 +134,7 @@ export class VideoComponent implements OnInit, OnDestroy {
       this.playlist = koala(this.video?.arquivos ?? [])
         .array<VideoArquivoInterface>()
         .pipe(klArray => {
-          const listaArquivos: ListaArquivos[] = [];
+          let listaArquivos: ListaArquivos[] = [];
 
           klArray.getValue().forEach(arquivo => {
             const index = koala(listaArquivos).array<ListaArquivos>().getIndex('temporada', arquivo.temporada);
@@ -153,6 +153,11 @@ export class VideoComponent implements OnInit, OnDestroy {
           if (!listaArquivos.find(itemLista => itemLista.current === true)) {
             listaArquivos[0].current = true;
           }
+
+          listaArquivos = listaArquivos.map(itemArquivo => {
+            itemArquivo.arquivos = koala(itemArquivo.arquivos).array<VideoArquivoInterface>().orderBy('titulo').getValue();
+            return itemArquivo;
+          });
 
           return listaArquivos;
         })
