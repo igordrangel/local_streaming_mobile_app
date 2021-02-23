@@ -76,15 +76,13 @@ export class Castjs {
       return setTimeout(this._init.bind(this), 250, tries);
     }
 
-    // terminate loop
-    clearInterval(this.intervalIsAvailable);
     // initialize cast API
     // @ts-ignore
     cast.framework.CastContext.getInstance().setOptions({
       receiverApplicationId: this.receiver,
       autoJoinPolicy: this.joinpolicy,
       language: 'pt-BR',
-      resumeSavedSession: false,
+      resumeSavedSession: true,
     });
     // create remote player controller
     // @ts-ignore

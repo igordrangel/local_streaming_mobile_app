@@ -150,6 +150,10 @@ export class VideoComponent implements OnInit, OnDestroy {
             }
           });
 
+          if (!listaArquivos.find(itemLista => itemLista.current === true)) {
+            listaArquivos[0].current = true;
+          }
+
           return listaArquivos;
         })
         .orderBy('temporada')
