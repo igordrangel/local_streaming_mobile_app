@@ -309,7 +309,7 @@ export class Castjs {
       mediaInfo.textTrackStyle = new chrome.cast.media.TextTrackStyle();
       mediaInfo.textTrackStyle.backgroundColor = '#00000000';
       mediaInfo.textTrackStyle.edgeColor = '#00000016';
-      mediaInfo.textTrackStyle.edgeType = 'DROP_SHADOW';
+      mediaInfo.textTrackStyle.edgeType = 'OUTLINE';
       mediaInfo.textTrackStyle.fontFamily = 'Arial';
       mediaInfo.textTrackStyle.fontScale = 1.0;
       mediaInfo.textTrackStyle.foregroundColor = '#FFFFFF';
