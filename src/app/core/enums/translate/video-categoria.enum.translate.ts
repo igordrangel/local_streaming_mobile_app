@@ -2,12 +2,12 @@ import { VideoCategoriaEnum } from '../video-categoria.enum';
 import { EnumTranslate } from '../enum.translate';
 
 export class VideoCategoriaEnumTranslate {
-	
+
 	public static translate(tipo: VideoCategoriaEnum): EnumTranslate {
 		const result = {
 			value: tipo
 		} as EnumTranslate;
-		
+
 		switch (tipo) {
 			case VideoCategoriaEnum.acao:
 				result.name = 'Ação';
@@ -42,8 +42,41 @@ export class VideoCategoriaEnumTranslate {
 			case VideoCategoriaEnum.thriller:
 				result.name = 'Thriller';
 				break;
+      case VideoCategoriaEnum.animacao:
+        result.name = 'Animação';
+        break;
+      case VideoCategoriaEnum.romance:
+        result.name = 'Romance';
+        break;
+      case VideoCategoriaEnum.musical:
+        result.name = 'Musical';
+        break;
+      case VideoCategoriaEnum.aventura:
+        result.name = 'Aventura';
+        break;
+      case VideoCategoriaEnum.drama:
+        result.name = 'Drama';
+        break;
+      case VideoCategoriaEnum.crime:
+        result.name = 'Crime';
+        break;
+      case VideoCategoriaEnum.familia:
+        result.name = 'Família';
+        break;
+      case VideoCategoriaEnum.faroeste:
+        result.name = 'Faroeste';
+        break;
+      case VideoCategoriaEnum.historia:
+        result.name = 'História';
+        break;
+      case VideoCategoriaEnum.kids:
+        result.name = 'kids';
+        break;
+      case VideoCategoriaEnum.realityShow:
+        result.name = 'Reality Show';
+        break;
 		}
-		
+
 		return result;
 	}
 }

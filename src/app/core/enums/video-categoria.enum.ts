@@ -9,5 +9,16 @@ export enum VideoCategoriaEnum {
   documentario,
   epico,
   guerra,
-  anime
+  anime,
+  animacao,
+  romance,
+  musical,
+  aventura,
+  drama,
+  crime,
+  familia,
+  faroeste,
+  historia,
+  kids,
+  realityShow
 }
