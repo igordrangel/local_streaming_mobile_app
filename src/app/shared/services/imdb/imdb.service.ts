@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 const DEFAULT_IMAGE = './assets/poster-default.jpg';
+const DEFAULT_BANNER = './assets/movietime.jpg';
 
 @Injectable({providedIn: 'root'})
 export class ImdbService {
@@ -24,7 +25,7 @@ export class ImdbService {
       this.http
           .get('https://imdb-api.com/en/API/Search/k_fwc4vynb/' + name)
           .subscribe((response: any) => {
-            observe.next(response?.results ? (response?.results[0]?.image ?? DEFAULT_IMAGE) : DEFAULT_IMAGE);
+            observe.next(response?.results ? (response?.results[0]?.image ?? DEFAULT_BANNER) : DEFAULT_BANNER);
           }, error => observe.error(error));
     });
   }
