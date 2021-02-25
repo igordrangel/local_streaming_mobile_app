@@ -14,12 +14,14 @@ time, mark, audio, video {border: 0;font: inherit;font-size: 100%;margin: 0;padd
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {display: block;}
-body {background: #000000;color: #F1F1F1;font-family: 'Open Sans', sans-serif;line-height: 1;}
+body {background: #040616;color: #F1F1F1;font-family: 'Open Sans', sans-serif;line-height: 1;}
 ol, ul {list-style: none;}
 blockquote, q {quotes: none;}
 blockquote:before, blockquote:after,
 q:before, q:after {content: '';content: none;}
 table {border-collapse: collapse;border-spacing: 0;}
+*::-webkit-scrollbar {background-clip: padding-box;border-radius: 0;width: 0;}
+*::-webkit-scrollbar-track {background: transparent;}
 mat-card-header .mat-card-header-text {width: 100%;}
 .mat-button-disabled,
 input::placeholder,

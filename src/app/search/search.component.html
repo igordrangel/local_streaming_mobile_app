@@ -1,11 +1,12 @@
-<ls-title title="Busca" titleIcon="search"></ls-title>
-<form>
-	<koala-dynamic-form
-		[formConfig]="formFilterConfig"
-		[form]="formFilter">
-	</koala-dynamic-form>
-</form>
-<mat-divider></mat-divider>
+<div class="search-content">
+  <ls-title title="Busca" titleIcon="search"></ls-title>
+  <form>
+    <koala-dynamic-form
+      [formConfig]="formFilterConfig"
+      [form]="formFilter">
+    </koala-dynamic-form>
+  </form>
+</div>
 <div class="content-videos-list">
 	<mat-action-list *ngIf="videos$ | async as videos">
 		<h3 mat-subheader>Filmes e Séries</h3>

@@ -1,8 +1,15 @@
-section {display: flex;flex-direction: column;flex-wrap: wrap;width: 100%;}
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+section {width: 100%;height: calc(100vh - 55px);overflow: auto;}
 section h2 {width: 100%;}
+.banner {position: relative;display: block;height: 60vh;overflow: hidden;}
+.banner figure {margin: 0;padding: 0;}
+.banner figure .img img {width: 100%;height: auto;}
+.banner figcaption {position: absolute;bottom: 0;width: 100%;background: linear-gradient(to top, #040616, rgba(4,6,22,.8), rgba(4,6,22,.4), transparent);text-align: center;}
+.banner figcaption h1 {display: block;margin: 0 auto;padding: 80px 0 20px;font-family: "Raleway", sans-serif;width: 60%;text-shadow: 0 1px 3px rgba(0,0,0,.3);}
+.banner figcaption button {background: #fff;color: #040616;border-radius: 20px!important;padding: 0 20px;line-height: 30px;}
 .mat-card {background: transparent!important;width: 180px;}
-.content-videos {box-sizing: border-box;display: flex;overflow: auto;padding: 0 10px;width: 100%;}
-.card-video {display: inline-block;height: 250px;margin: 5px;padding: 0;position: relative;}
-.card-video img {height: 250px;margin: 0;width: 180px;}
+.content-videos {box-sizing: border-box;display: flex;overflow: auto;padding: 0 10px;margin-right: 5px;width: 100%;}
+.card-video {display: inline-block;height: 200px;margin: 5px;padding: 0;position: relative;}
+.card-video img {height: 200px;margin: 0;width: 130px;border-radius: 5px;}
 .card-video h4 {color: #fff;text-align: center;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;width: 100%;}
 .loader {align-items: center;display: flex;height: 100%;justify-content: center;width: 100%;}

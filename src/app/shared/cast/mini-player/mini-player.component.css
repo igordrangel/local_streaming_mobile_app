@@ -1,6 +1,6 @@
-.mini-player-content {position: fixed;display: flex;justify-content: space-between;align-items: center;box-sizing: border-box;padding: 5px 10px;bottom: 50px;width: 100%;background: #0E0E0E;box-shadow: 0 1px 3px rgba(0,0,0,.3);animation: showMiniPlayer .3s ease-in-out;z-index: 2;}
+.mini-player-content {position: fixed;display: flex;justify-content: space-between;align-items: center;box-sizing: border-box;padding: 5px 10px;bottom: 50px;width: 100%;background: #030926;box-shadow: 0 1px 3px rgba(0,0,0,.3);animation: showMiniPlayer .3s ease-in-out;z-index: 2;}
 .mini-player-content.hide {animation: hideMiniPlayer .3s ease-in-out!important;}
-.mini-player-content .video-data {display: flex;justify-content: center;flex-direction: column;padding: 0 10px;width: 30%;height: 70px;color: #fff;text-decoration: none;}
+.mini-player-content .video-data {display: flex;justify-content: center;flex-direction: column;padding: 0 10px;width: 30%;height: 70px;color: rgba(255,255,255,.8);text-decoration: none;}
 .mini-player-content .video-data h2 {font-size: 14px;line-height: 11px;text-overflow: ellipsis;white-space: nowrap;width: 100%;margin: 0;padding: 5px 0;overflow: hidden;}
 .mini-player-content .video-data small {font-size: 9px;line-height: 9px;text-overflow: ellipsis;white-space: nowrap;width: 100%;overflow: hidden;}
 .mini-player-content .poster {display: flex;align-items: center;justify-content: center;}

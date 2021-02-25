@@ -14,7 +14,14 @@ import { SearchComponent } from './search/search.component';
 import { VideoComponent } from './video/video.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { KoalaDialogModule, KoalaDialogService, KoalaFormModule, KoalaQuestionModule, KoalaQuestionService } from 'ngx-koala';
+import {
+  KoalaButtonModule,
+  KoalaDialogModule,
+  KoalaDialogService,
+  KoalaFormModule,
+  KoalaQuestionModule,
+  KoalaQuestionService
+} from 'ngx-koala';
 import { HttpClientModule } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
 import { TitleModule } from './shared/title/title.module';

@@ -1,10 +1,20 @@
 <section>
-	<ls-title title="Adicionados Recentemente" titleIcon="new_releases"></ls-title>
-	<div *ngIf="videos$ | async as videos else showLoader" class="content-videos">
-		<mat-card *ngFor="let video of videos" [routerLink]="'/video/'+video.id" class="card-video">
-			<img [alt]="video.tituloOriginal" [src]="video.poster" mat-card-image/>
-		</mat-card>
-	</div>
+  <div *ngIf="banner$ | async as banner else showLoader" class="banner">
+    <figure>
+      <div class="img">
+        <img [src]="banner.poster" [alt]="banner.tituloOriginal"/>
+      </div>
+      <figcaption>
+        <h1>{{banner.tituloOriginal}}</h1>
+        <button
+          [routerLink]="'/video/' + banner.id"
+          mat-raised-button
+          color="primary">
+          Assistir
+        </button>
+      </figcaption>
+    </figure>
+  </div>
 	<ls-title title="Filmes" titleIcon="movie"></ls-title>
 	<div *ngIf="filmes$ | async as filmes else showLoader" class="content-videos">
 		<mat-card *ngFor="let filme of filmes" [routerLink]="'/video/'+filme.id" class="card-video">
