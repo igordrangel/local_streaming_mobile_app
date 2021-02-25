@@ -1,3 +1,5 @@
+.content {height: calc(100vh - 55px);}
+.content.miniplayer {height: calc(100vh - 145px);overflow: auto;}
 form {box-sizing: border-box;padding: 0 20px 0;width: 100%;}
 .search-content {border-radius: 0 0 20px 20px;padding-bottom: 10px;margin-bottom: 10px;background: rgba(26,35,136,.1);}
 .content-videos-list h3 {color: rgba(255,255,255,.6);}

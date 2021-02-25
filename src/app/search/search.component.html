@@ -1,19 +1,21 @@
-<div class="search-content">
-  <ls-title title="Busca" titleIcon="search"></ls-title>
-  <form>
-    <koala-dynamic-form
-      [formConfig]="formFilterConfig"
-      [form]="formFilter">
-    </koala-dynamic-form>
-  </form>
-</div>
-<div class="content-videos-list">
-	<mat-action-list *ngIf="videos$ | async as videos">
-		<h3 mat-subheader>Filmes e Séries</h3>
-		<mat-list-item *ngFor="let video of videos" [routerLink]="'/video/'+video.id">
-			<img [alt]="video.tituloOriginal" [src]="video.poster" mat-list-avatar/>
-			<h4 mat-line>{{video.tituloOriginal}}</h4>
-			<small mat-line>{{categoriaTranslate.translate(video.categoria).name}}</small>
-		</mat-list-item>
-	</mat-action-list>
+<div class="content" [ngClass]="{'miniplayer': miniPlayer$ | async}">
+  <div class="search-content">
+    <ls-title title="Busca" titleIcon="search"></ls-title>
+    <form>
+      <koala-dynamic-form
+        [formConfig]="formFilterConfig"
+        [form]="formFilter">
+      </koala-dynamic-form>
+    </form>
+  </div>
+  <div class="content-videos-list">
+    <mat-action-list *ngIf="videos$ | async as videos">
+      <h3 mat-subheader>Filmes e Séries</h3>
+      <mat-list-item *ngFor="let video of videos" [routerLink]="'/video/'+video.id">
+        <img [alt]="video.tituloOriginal" [src]="video.poster" mat-list-avatar/>
+        <h4 mat-line>{{video.tituloOriginal}}</h4>
+        <small mat-line>{{categoriaTranslate.translate(video.categoria).name}}</small>
+      </mat-list-item>
+    </mat-action-list>
+  </div>
 </div>

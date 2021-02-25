@@ -1,4 +1,4 @@
-<section>
+<section [ngClass]="{'miniplayer': miniPlayer$ | async}">
   <div *ngIf="banner$ | async as banner else showLoader" class="banner">
     <figure>
       <div class="img">

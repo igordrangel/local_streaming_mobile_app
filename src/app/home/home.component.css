@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
 section {width: 100%;height: calc(100vh - 55px);overflow: auto;}
+section.miniplayer {height: calc(100vh - 145px);}
 section h2 {width: 100%;}
 .banner {position: relative;display: block;height: 60vh;overflow: hidden;}
 .banner figure {margin: 0;padding: 0;}

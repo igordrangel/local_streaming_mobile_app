@@ -10,6 +10,7 @@ import { KlDelay } from 'koala-utils/dist/utils/KlDelay';
 import { koala } from 'koala-utils';
 import { MediaInterface } from '../shared/cast/player/media-cast-player.component';
 import { GoogleCastState } from "../shared/cast/media-cast.service";
+import { MINIPLAYER_STATE_STORAGE_NAME } from "../shared/cast/mini-player/mini-player.component";
 
 export const ID_VIDEO_STORAGE_NAME = 'lsIdCurrentVideo';
 
@@ -34,14 +35,17 @@ export class VideoComponent implements OnInit, OnDestroy {
   public miniPlayer$ = new BehaviorSubject<boolean>(false);
   private id: number;
   private subscriptionGoogleCastConnection: Subscription;
+  private miniplayerInterval: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private localStreamingService: LocalStreamingService
-  ) {}
+  ) {
+  }
 
   ngOnDestroy() {
     this.subscriptionGoogleCastConnection?.unsubscribe();
+    clearInterval(this.miniplayerInterval);
   }
 
   ngOnInit() {
@@ -69,9 +73,6 @@ export class VideoComponent implements OnInit, OnDestroy {
                 this.showList$.next(!GoogleCastState.googleCast.connected);
                 this.subscriptionGoogleCastConnection = GoogleCastState.isConnected.subscribe(isConnected => {
                   this.showList$.next(!isConnected);
-                  if (!isConnected) {
-                    this.miniPlayer$.next(false);
-                  }
                 });
                 await KlDelay.waitFor(300);
                 if (this.miniPlayer$.getValue()) {
@@ -79,6 +80,9 @@ export class VideoComponent implements OnInit, OnDestroy {
                 }
               });
         });
+    this.miniplayerInterval = setInterval(() => {
+      this.miniPlayer$.next(localStorage.getItem(MINIPLAYER_STATE_STORAGE_NAME) === 'true');
+    }, 300);
   }
 
   public collapseList() {
@@ -89,7 +93,6 @@ export class VideoComponent implements OnInit, OnDestroy {
     this.videoSelectedSubject.next(null);
     await KlDelay.waitFor(50);
     const sourceMedia = arquivo ? `http://${IP()}:3000/video/${this.id}/${arquivo.filename}` : '';
-    this.miniPlayer$.next(!arquivo);
     this.videoSelectedSubject.next({
       subtitleSrc: (arquivo?.legendaFilename ?
                     `http://${IP()}:3000/video/${this.id}/${arquivo.legendaFilename.replace('.srt', '.vtt')}` :
@@ -117,8 +120,8 @@ export class VideoComponent implements OnInit, OnDestroy {
 
   public verifyActiveVideo(arquivo: VideoArquivoInterface) {
     return arquivo ?
-      this.videoSelectedSubject.getValue()?.videoSrc.indexOf(arquivo.filename) >= 0 :
-      false;
+           this.videoSelectedSubject.getValue()?.videoSrc.indexOf(arquivo.filename) >= 0 :
+           false;
   }
 
   public getIdElement(arquivo: VideoArquivoInterface) {

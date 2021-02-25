@@ -1,9 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { GoogleCastState } from "../media-cast.service";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { NavigationEnd, Router } from "@angular/router";
 import { ID_VIDEO_STORAGE_NAME } from "../../../video/video.component";
 import { KlDelay } from "koala-utils/dist/utils/KlDelay";
+
+export const MINIPLAYER_STATE_STORAGE_NAME = 'lsMiniplayerState';
 
 export interface MiniPlayerInterface {
   poster: string;
@@ -16,13 +18,21 @@ export interface MiniPlayerInterface {
   templateUrl: 'mini-player.component.html',
   styleUrls: ['mini-player.component.css']
 })
-export class MiniPlayerComponent implements OnInit {
+export class MiniPlayerComponent implements OnInit, OnDestroy {
   public hide$ = new BehaviorSubject<boolean>(false);
   public video$ = new BehaviorSubject<MiniPlayerInterface>(null);
   public animateHide$ = new BehaviorSubject<boolean>(false);
-  public redirectTo = '/video/' + localStorage.getItem(ID_VIDEO_STORAGE_NAME);
+  public redirectTo: string;
+  private castConnected = false;
+  private castConnectInterval: any;
+  private hideSubscription: Subscription;
 
   constructor(private router: Router) {
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.castConnectInterval);
+    this.hideSubscription.unsubscribe();
   }
 
   ngOnInit() {
@@ -35,9 +45,17 @@ export class MiniPlayerComponent implements OnInit {
       }
     });
 
-    GoogleCastState.isConnected.subscribe(async () => await this.updateState())
     GoogleCastState.changeVideo.subscribe(async () => await this.updateState());
-    setTimeout(async () => await this.updateState(), 500);
+    this.castConnectInterval = setInterval(async () => {
+      if (this.castConnected !== GoogleCastState.googleCast.connected) {
+        this.castConnected = GoogleCastState.googleCast.connected;
+        await this.updateState();
+      }
+    }, 300);
+    this.hideSubscription = this.hide$.subscribe(hide => {
+      localStorage.setItem(MINIPLAYER_STATE_STORAGE_NAME, `${!hide}`);
+      this.redirectTo = '/video/' + localStorage.getItem(ID_VIDEO_STORAGE_NAME);
+    });
   }
 
   private isCurrentVideoPage() {
