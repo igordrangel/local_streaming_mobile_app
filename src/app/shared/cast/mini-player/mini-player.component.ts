@@ -46,7 +46,12 @@ export class MiniPlayerComponent implements OnInit, OnDestroy {
 
     GoogleCastState.changeVideo.pipe(debounceTime(1000)).subscribe(async () => await this.updateState());
     this.castConnectInterval = setInterval(async () => {
-      this.redirectTo = '/video/' + localStorage.getItem(ID_VIDEO_STORAGE_NAME);
+      if (
+        localStorage.getItem(ID_VIDEO_STORAGE_NAME) &&
+        localStorage.getItem(ID_VIDEO_STORAGE_NAME) !== 'null'
+      ) {
+        this.redirectTo = '/video/' + localStorage.getItem(ID_VIDEO_STORAGE_NAME);
+      }
       localStorage.setItem(MINIPLAYER_STATE_STORAGE_NAME, `${!this.hide$.getValue() && !!this.video$.getValue() && !!this.video$.getValue()?.title}`);
       if (this.castConnected !== GoogleCastState.googleCast.connected) {
         this.castConnected = GoogleCastState.googleCast.connected;
