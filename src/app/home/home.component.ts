@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { LocalStreamingService } from '../core/local-streaming.service';
 import { VideoTipoEnum } from '../core/enums/video-tipo.enum';
+import { VideoInterface } from "../core/interfaces/video.interface";
+import { Observable } from "rxjs";
+import { switchMap } from "rxjs/operators";
 
 @Component({
 	templateUrl: 'home.component.html',
@@ -21,6 +24,15 @@ export class HomeComponent {
 		if (!tipo) {
 			delete filter.tipo;
 		}
-		return this.localStreamingService.getLista(filter);
+		return this.localStreamingService
+               .getLista(filter)
+               .pipe(switchMap(videos => {
+                 return new Observable<VideoInterface[]>(observe => {
+                   videos.map(video => {
+                     video.poster = video.poster ?? './assets/poster-default.jpg';
+                   });
+                   observe.next(videos);
+                 });
+               }));
 	}
 }

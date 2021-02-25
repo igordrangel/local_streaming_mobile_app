@@ -4,7 +4,7 @@ import { DynamicFormTypeFieldEnum, KoalaDynamicFormFieldInterface, KoalaDynamicF
 import { Observable } from 'rxjs';
 import { VideoInterface } from '../core/interfaces/video.interface';
 import { LocalStreamingService } from '../core/local-streaming.service';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, switchMap } from 'rxjs/operators';
 import { VideoCategoriaEnumTranslate } from '../core/enums/translate/video-categoria.enum.translate';
 import { koala } from 'koala-utils';
 
@@ -52,6 +52,14 @@ export class SearchComponent implements OnInit {
                      limit: 100
                    })
                    .getValue()
-               );
+               )
+               .pipe(switchMap(videos => {
+                 return new Observable<VideoInterface[]>(observe => {
+                   videos.map(video => {
+                     video.poster = video.poster ?? './assets/poster-default.jpg';
+                   });
+                   observe.next(videos);
+                 });
+               }));
   }
 }
