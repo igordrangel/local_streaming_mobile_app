@@ -2,28 +2,19 @@
 	<ls-title title="Adicionados Recentemente" titleIcon="new_releases"></ls-title>
 	<div *ngIf="videos$ | async as videos else showLoader" class="content-videos">
 		<mat-card *ngFor="let video of videos" [routerLink]="'/video/'+video.id" class="card-video">
-			<img *ngIf="video.poster | async as poster" [alt]="poster.alt" [src]="poster.src" mat-card-image/>
-      <mat-card-content>
-        <h4>{{video.tituloOriginal}}</h4>
-      </mat-card-content>
+			<img [alt]="video.tituloOriginal" [src]="video.poster" mat-card-image/>
 		</mat-card>
 	</div>
 	<ls-title title="Filmes" titleIcon="movie"></ls-title>
 	<div *ngIf="filmes$ | async as filmes else showLoader" class="content-videos">
 		<mat-card *ngFor="let filme of filmes" [routerLink]="'/video/'+filme.id" class="card-video">
-			<img *ngIf="filme.poster | async as poster" [alt]="poster.alt" [src]="poster.src" mat-card-image/>
-      <mat-card-content>
-        <h4>{{filme.tituloOriginal}}</h4>
-      </mat-card-content>
+			<img [alt]="filme.tituloOriginal" [src]="filme.poster" mat-card-image/>
 		</mat-card>
 	</div>
 	<ls-title title="Séries" titleIcon="videocam"></ls-title>
 	<div *ngIf="series$ | async as series else showLoader" class="content-videos">
 		<mat-card *ngFor="let serie of series" [routerLink]="'/video/'+serie.id" class="card-video">
-			<img *ngIf="serie.poster | async as poster" [alt]="poster.alt" [src]="poster.src" mat-card-image/>
-      <mat-card-content>
-        <h4>{{serie.tituloOriginal}}</h4>
-      </mat-card-content>
+			<img [alt]="serie.tituloOriginal" [src]="serie.poster" mat-card-image/>
 		</mat-card>
 	</div>
 </section>

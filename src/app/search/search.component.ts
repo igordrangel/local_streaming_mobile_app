@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicFormTypeFieldEnum, KoalaDynamicFormFieldInterface, KoalaDynamicFormService } from 'ngx-koala';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { VideoInterface } from '../core/interfaces/video.interface';
 import { LocalStreamingService } from '../core/local-streaming.service';
-import { debounceTime, switchMap } from 'rxjs/operators';
-import { PosterInterface } from '../core/interfaces/poster.interface';
+import { debounceTime } from 'rxjs/operators';
 import { VideoCategoriaEnumTranslate } from '../core/enums/translate/video-categoria.enum.translate';
 import { koala } from 'koala-utils';
 
@@ -23,7 +22,8 @@ export class SearchComponent implements OnInit {
     private fb: FormBuilder,
     private dynamicFormService: KoalaDynamicFormService,
     private localStreamingService: LocalStreamingService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.formFilter = this.fb.group({});
@@ -52,17 +52,6 @@ export class SearchComponent implements OnInit {
                      limit: 100
                    })
                    .getValue()
-               )
-               .pipe(switchMap(videos => {
-                 return new Observable<VideoInterface[]>(observe => {
-                   videos.map(video => {
-                     video.poster = new BehaviorSubject<PosterInterface>({
-                       src: './assets/poster-default.jpg',
-                       alt: video.tituloOriginal
-                     });
-                   });
-                   observe.next(videos);
-                 });
-               }));
+               );
   }
 }

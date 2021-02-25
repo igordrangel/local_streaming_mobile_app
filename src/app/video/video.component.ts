@@ -95,6 +95,7 @@ export class VideoComponent implements OnInit, OnDestroy {
                     `http://${IP()}:3000/video/${this.id}/${arquivo.legendaFilename.replace('.srt', '.vtt')}` :
                     null
       ),
+      posterSrc: this.video.poster,
       videoSrc: sourceMedia,
       videoType: arquivo?.type ?? null,
       title: this.video.tituloOriginal,

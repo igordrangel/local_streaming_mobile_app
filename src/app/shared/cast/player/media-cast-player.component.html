@@ -14,7 +14,7 @@
 	<h1>{{media.title}}</h1>
 	<small>{{media.subtitle}}</small>
 	<div class="container-video">
-		<img [src]="media.posterSrc ? media.posterSrc : './assets/movietime.jpg'" [alt]="media.title"/>
+		<img src="./assets/movietime.jpg" [alt]="media.title"/>
 		<div *ngIf="loader$ | async" class="loader">
 			<mat-spinner diameter="50"></mat-spinner>
 		</div>
