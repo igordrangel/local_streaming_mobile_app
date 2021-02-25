@@ -4,8 +4,8 @@
 .video-info {position: absolute;background: #030926;height: 90%;width: 100%;border-radius: 20px 20px 0 0;box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.3);transition: .3s;z-index: 2;}
 .video-info.show {top: 10%;height: 90%;}
 .video-info.hide {top: calc(90% - 60px);height: calc(20% - 60px);}
-.video-info.show.mini-player {height: calc(90% - 128px);}
-.video-info.hide.mini-player {top: calc(90% - 128px);}
+.video-info.show.mini-player {height: calc(90% - 148px);}
+.video-info.hide.mini-player {top: calc(90% - 148px);}
 .video-info .playlist {display: block;overflow: auto;height: calc(100% - 135px);}
 .video-info mat-list-item {color: rgba(255,255,255,.8);}
 .video-info mat-list-item.active {background: rgba(255, 255, 255, .1);}

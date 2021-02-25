@@ -47,6 +47,7 @@ export class MediaCastButtonComponent implements OnChanges {
     if (update || (!update && !localStorage.getItem(ID_VIDEO_STORAGE_NAME))) {
       const arrVideoUrl = location.href.split('/');
       const idVideo = arrVideoUrl[arrVideoUrl.length - 1];
+      console.log(arrVideoUrl, idVideo);
       setTimeout(() => localStorage.setItem(ID_VIDEO_STORAGE_NAME, idVideo), 300);
     }
   }
