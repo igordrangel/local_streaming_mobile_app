@@ -37,7 +37,7 @@ export class MiniPlayerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.router.events.subscribe(async event => {
       if (event instanceof NavigationEnd) {
-        const hide = this.isCurrentVideoPage();
+        const hide = this.isCurrentVideoPage(event.url);
         this.animateHide$.next(hide);
         await KlDelay.waitFor(300);
         this.hide$.next(hide);
@@ -60,8 +60,8 @@ export class MiniPlayerComponent implements OnInit, OnDestroy {
     }, 300);
   }
 
-  private isCurrentVideoPage() {
-    return location.href.indexOf('/video/' + localStorage.getItem(ID_VIDEO_STORAGE_NAME)) >= 0;
+  private isCurrentVideoPage(url?: string) {
+    return (url ?? location.href).indexOf('/video/' + localStorage.getItem(ID_VIDEO_STORAGE_NAME)) >= 0;
   }
 
   private async updateState() {

@@ -47,14 +47,14 @@ export class MediaCastPlayerComponent implements AfterViewInit, OnInit, OnDestro
 
   ngOnInit() {
     this.intervalTimer = setInterval(async () => {
-      await KlDelay.waitFor(300);
+      await KlDelay.waitFor(400);
       this.mediaProgress$.next({
         time: GoogleCastState.googleCast.time,
         timePretty: GoogleCastState.googleCast.timePretty,
         duration: GoogleCastState.googleCast.duration,
         durationPretty: GoogleCastState.googleCast.durationPretty
       });
-    }, 700);
+    }, 600);
   }
 
   ngOnDestroy() {

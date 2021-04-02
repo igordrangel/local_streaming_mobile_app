@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { GoogleCastState, MediaCastService, VideoCast } from './media-cast.service';
 import { BehaviorSubject } from "rxjs";
 import { ID_VIDEO_STORAGE_NAME } from "../../video/video.component";
@@ -8,7 +8,7 @@ import { ID_VIDEO_STORAGE_NAME } from "../../video/video.component";
   templateUrl: 'media-cast-button.component.html',
   styleUrls: ['media-cast-button.component.css']
 })
-export class MediaCastButtonComponent implements OnChanges {
+export class MediaCastButtonComponent implements OnInit, OnChanges {
   @Input() video: VideoCast;
   @Input() enableSubtitle: BehaviorSubject<boolean>;
 
@@ -19,6 +19,14 @@ export class MediaCastButtonComponent implements OnChanges {
 
   constructor(public mediaCastService: MediaCastService) {
     mediaCastService.init();
+  }
+
+  ngOnInit() {
+    this.isConnected$.subscribe(isConnected => {
+      if (isConnected) {
+        this.setIdVideoInStorage();
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -37,7 +45,6 @@ export class MediaCastButtonComponent implements OnChanges {
       (this.isConnected$.getValue() && !disconnect)
     ) {
       this.mediaCastService.cast(this.video, enableSubtitle);
-      this.setIdVideoInStorage();
     } else if (this.isConnected$.getValue() && disconnect) {
       this.mediaCastService.disconnect();
     }
@@ -47,7 +54,6 @@ export class MediaCastButtonComponent implements OnChanges {
     if (update || (!update && !localStorage.getItem(ID_VIDEO_STORAGE_NAME))) {
       const arrVideoUrl = location.href.split('/');
       const idVideo = arrVideoUrl[arrVideoUrl.length - 1];
-      console.log(arrVideoUrl, idVideo);
       setTimeout(() => localStorage.setItem(ID_VIDEO_STORAGE_NAME, idVideo), 300);
     }
   }

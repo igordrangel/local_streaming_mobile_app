@@ -129,7 +129,7 @@ export class VideoComponent implements OnInit, OnDestroy {
   }
 
   public scrollToElementOnPlaylist(arquivo: VideoArquivoInterface) {
-    document.getElementById(this.getIdElement(arquivo)).scrollIntoView();
+    document.getElementById(this.getIdElement(arquivo))?.scrollIntoView();
   }
 
   private setPlaylist() {

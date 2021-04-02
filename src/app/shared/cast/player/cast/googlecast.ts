@@ -32,7 +32,6 @@ export class Castjs {
   public durationPretty = '00:00:00';
   public progress = 0;
   public state = 'disconnected';
-  public intervalIsAvailable = 0;
   private _events = {} as any;
   private _player: RemotePlayer = null;
   private _controller: RemotePlayerController = null;

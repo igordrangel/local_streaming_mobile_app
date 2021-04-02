@@ -11,6 +11,7 @@ export interface VideoCast {
 }
 
 export class GoogleCastState {
+  public static intervalSession: any;
   public static isPaused = new BehaviorSubject<boolean>(false);
   public static isAvailable = new BehaviorSubject<boolean>(false);
   public static isConnected = new BehaviorSubject<boolean>(false);
@@ -25,8 +26,18 @@ export class MediaCastService {
     GoogleCastState.isPaused.subscribe(isPaused => isPaused ? GoogleCastState.googleCast.pause() : GoogleCastState.googleCast.play());
     GoogleCastState.isAvailable.next(GoogleCastState.googleCast.available);
     GoogleCastState.isConnected.next(GoogleCastState.googleCast.connected);
-    GoogleCastState.googleCast.on('connect', () => GoogleCastState.isConnected.next(true));
-    GoogleCastState.googleCast.on('disconnect', () => GoogleCastState.isConnected.next(false));
+    GoogleCastState.googleCast.on('connect', () => {
+      GoogleCastState.isConnected.next(true);
+      GoogleCastState.intervalSession = setInterval(() => {
+        if (GoogleCastState.googleCast.connected !== GoogleCastState.isConnected.getValue()) {
+          GoogleCastState.isConnected.next(GoogleCastState.googleCast.connected);
+        }
+      }, 5000);
+    });
+    GoogleCastState.googleCast.on('disconnect', () => {
+      GoogleCastState.isConnected.next(false);
+      clearInterval(GoogleCastState.intervalSession);
+    });
   }
 
   public cast(video: VideoCast, enableSubtitle = false) {
